@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    val myResponse: MutableLiveData<HouseResponse> = MutableLiveData()
+    val myResponse: MutableLiveData<List<HouseResponse>> = MutableLiveData()
 
     fun getHouses() {
         viewModelScope.launch {

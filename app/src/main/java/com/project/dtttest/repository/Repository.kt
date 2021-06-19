@@ -5,7 +5,7 @@ import com.project.dtttest.model.HouseResponse
 
 class Repository {
 
-    suspend fun getHouses(): HouseResponse {
+    suspend fun getHouses(): List<HouseResponse> {
         return RetrofitInstance.api.getHouses()
     }
 }
