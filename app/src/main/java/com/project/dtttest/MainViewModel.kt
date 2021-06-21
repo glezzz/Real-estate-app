@@ -6,10 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.repository.Repository
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    val myResponse: MutableLiveData<List<HouseResponse>> = MutableLiveData()
+    val myResponse: MutableLiveData<Response<List<HouseResponse>>> = MutableLiveData()
 
     fun getHouses() {
         viewModelScope.launch {
