@@ -1,4 +1,4 @@
-package com.project.dtttest
+package com.project.dtttest.ui
 
 import com.project.dtttest.adapters.HouseAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -6,22 +6,28 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.dtttest.R
 import com.project.dtttest.databinding.ActivityMainBinding
-import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.repository.Repository
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
     private val houseAdapter by lazy { HouseAdapter() }
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupRecyclerView()
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
@@ -34,10 +40,9 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
             }
         })
+
+        binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
     }
 
-    private fun setupRecyclerView() {
-        binding.rvHouses.adapter = houseAdapter
-        binding.rvHouses.layoutManager = LinearLayoutManager(this)
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.project.dtttest
+package com.project.dtttest.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

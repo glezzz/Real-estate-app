@@ -3,6 +3,7 @@
 App I'm building as a test for an application to a traineeship. 
 
 ● This app should successfully meet the following requirements;
+
 - [ ] As a user, I should be able to see the DTT splash screen in order to have a
       sense of DTT branding.
       
