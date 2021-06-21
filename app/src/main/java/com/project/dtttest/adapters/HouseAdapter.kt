@@ -1,15 +1,19 @@
 package com.project.dtttest.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 
 class HouseAdapter(/*private val houses: List<HouseResponse>*/) :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
 
-    private var myList = emptyList<HouseResponse>()
+    private var housesLists = emptyList<HouseResponse>()
 
     inner class HouseViewHolder(val binding: ItemHouseBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -30,15 +34,34 @@ class HouseAdapter(/*private val houses: List<HouseResponse>*/) :
     }
 
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
-        holder.binding.tvPrice.text = myList[position].price.toString()
-        holder.binding.tvBedrooms.text = myList[position].bedrooms.toString()
-        holder.binding.tvZipcode.text = myList[position].zip
-        holder.binding.tvCity.text = myList[position].city
+        holder.itemView.apply {
+            holder.binding.tvPrice.text = housesLists[position].price.toString()
+            holder.binding.tvBedrooms.text = housesLists[position].bedrooms.toString()
+            holder.binding.tvZipcode.text = housesLists[position].zip
+            holder.binding.tvCity.text = housesLists[position].city
+
+            val url: String =
+                "https://intern.docker-dev.d-tt.nl" + housesLists[position].image
+            val glideUrl = GlideUrl(
+                url,
+                LazyHeaders.Builder()
+                    .addHeader("Access-Key", "98bww4ezuzfePCYFxJEWyszbUXc7dxRx")
+                    .build()
+            )
+
+            Glide.with(this).load(glideUrl).into(holder.binding.ivHouse)
+        }
+
+        // holder.binding.tvPrice.text = housesLists[position].price.toString()
+        // holder.binding.tvBedrooms.text = housesLists[position].bedrooms.toString()
+        // holder.binding.tvZipcode.text = housesLists[position].zip
+        // holder.binding.tvCity.text = housesLists[position].city
+
 
         // holder.bind(houses[position])
     }
 
-    override fun getItemCount(): Int = myList.size
+    override fun getItemCount(): Int = housesLists.size
 
     // class HouseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     //
@@ -54,7 +77,7 @@ class HouseAdapter(/*private val houses: List<HouseResponse>*/) :
     // }
 
     fun setData(newList: List<HouseResponse>) {
-        myList = newList
+        housesLists = newList
         notifyDataSetChanged()
     }
 }
