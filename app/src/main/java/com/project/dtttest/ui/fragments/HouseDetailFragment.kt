@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.project.dtttest.R
 import com.project.dtttest.databinding.FragmentHouseDetailBinding
 import com.project.dtttest.databinding.FragmentOverviewBinding
@@ -36,5 +39,18 @@ class HouseDetailFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         val house = args.house
         binding.tvDescription.text = house.description
+        binding.tvPriceDetail.text = "$" + house.price.toString()
+        binding.tvBedroomsDetail.text = house.bedrooms.toString()
+        binding.tvBathroomsDetail.text = house.bathrooms.toString()
+        binding.tvSizeDetail.text = house.size.toString()
+        val url: String =
+            "https://intern.docker-dev.d-tt.nl" + house.image
+        val glideUrl = GlideUrl(
+            url,
+            LazyHeaders.Builder()
+                .addHeader("Access-Key", "98bww4ezuzfePCYFxJEWyszbUXc7dxRx")
+                .build()
+        )
+        Glide.with(this).load(glideUrl).into(binding.ivHouseDetail)
     }
 }

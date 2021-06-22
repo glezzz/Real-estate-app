@@ -140,53 +140,7 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
-
-        <!--                <TextView-->
-        <!--                    android:id="@+id/tvBedrooms"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginTop="16dp"-->
-        <!--                    android:text="Bedrooms"-->
-        <!--                    android:textColor="@android:color/black"-->
-        <!--                    app:layout_constraintStart_toStartOf="parent"-->
-        <!--                    app:layout_constraintTop_toBottomOf="@+id/ivHouse" />-->
-
-
-        <!--                <TextView-->
-        <!--                    android:id="@+id/tvDescription"-->
-        <!--                    android:layout_width="0dp"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginStart="8dp"-->
-        <!--                    android:layout_marginTop="16dp"-->
-        <!--                    android:ellipsize="end"-->
-        <!--                    android:maxLines="5"-->
-        <!--                    android:text="description"-->
-        <!--                    android:textColor="@android:color/black"-->
-        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                    app:layout_constraintStart_toEndOf="@+id/ivHouse"-->
-        <!--                    app:layout_constraintTop_toBottomOf="@+id/tvPrice" />-->
-
-        <!--                <TextView-->
-        <!--                    android:id="@+id/tvZipcode"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginTop="8dp"-->
-        <!--                    android:text="Zipcode"-->
-        <!--                    android:textColor="@android:color/black"-->
-        <!--                    app:layout_constraintStart_toStartOf="parent"-->
-        <!--                    app:layout_constraintTop_toBottomOf="@+id/tvBedrooms" />-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/tvCity"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginTop="8dp"-->
-        <!--                android:text="City"-->
-        <!--                android:textColor="@android:color/black"-->
-        <!--                app:layout_constraintStart_toStartOf="parent"-->
-        <!--                app:layout_constraintTop_toBottomOf="@+id/tvZipcode" />-->
 
     </LinearLayout>
 
