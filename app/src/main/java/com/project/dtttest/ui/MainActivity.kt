@@ -32,14 +32,14 @@ class MainActivity : AppCompatActivity() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getHouses()
-        viewModel.myResponse.observe(this, Observer { response ->
-            if (response.isSuccessful) {
-                response.body()?.let { houseAdapter.setData(it) }
-            } else {
-                Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
-            }
-        })
+        // viewModel.getHouses()
+        // viewModel.myResponse.observe(this, Observer { response ->
+        //     if (response.isSuccessful) {
+        //         response.body()?.let { houseAdapter.setData(it) }
+        //     } else {
+        //         Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
+        //     }
+        // })
 
         binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
     }

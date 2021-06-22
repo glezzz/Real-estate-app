@@ -32,7 +32,7 @@ App I'm building as a test for an application to a traineeship.
 - [ ] As a user, I should be able to see a pin on the map showing the location of
       the house in order to get an idea where it is.
       
-- [ ] As a user, I should be able to access the about page in order to know more
+- [x] As a user, I should be able to access the about page in order to know more
       about the app and its developers.
       
 - [ ] As a user, I should be able to get directions to a house by tapping on the

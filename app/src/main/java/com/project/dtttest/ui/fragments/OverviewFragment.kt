@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.dtttest.R
@@ -14,7 +16,7 @@ import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 
 
-class OverviewFragment : Fragment(/*R.layout.fragment_overview*/) {
+class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
     lateinit var viewModel: MainViewModel
     lateinit var houseAdapter: HouseAdapter
@@ -34,6 +36,14 @@ class OverviewFragment : Fragment(/*R.layout.fragment_overview*/) {
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
+        viewModel.getHouses()
+        viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
+            if (response.isSuccessful) {
+                response.body()?.let { houseAdapter.setData(it) }
+            } else {
+                Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
+            }
+        })
 
         // findNavController().navigate(
         //     R.id.action_breakingsNewsFragment_to_articleFragment,
