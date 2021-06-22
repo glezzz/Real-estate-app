@@ -15,6 +15,7 @@ import com.project.dtttest.databinding.FragmentOverviewBinding
 import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 
+// try to load without r.layout
 class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
     lateinit var viewModel: MainViewModel

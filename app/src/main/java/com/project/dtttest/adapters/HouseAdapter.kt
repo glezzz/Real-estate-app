@@ -3,6 +3,7 @@ package com.project.dtttest.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
@@ -15,6 +16,9 @@ class HouseAdapter() :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
 
     private var housesLists = emptyList<HouseResponse>()
+
+    // Click listener to HouseDetailFragment
+    private var onitemClickListener: ((HouseResponse) -> Unit)? = null
 
     inner class HouseViewHolder(val binding: ItemHouseBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -34,12 +38,9 @@ class HouseAdapter() :
         // return HouseViewHolder(layoutInflater.inflate(R.layout.item_house, parent, false))
     }
 
+    override fun getItemCount(): Int = housesLists.size
+
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
-
-        val intArray = intArrayOf(housesLists[position].price)
-        intArray.sort()
-
-
 
         holder.itemView.apply {
             holder.binding.tvPrice.text = "$" + housesLists[position].price.toString()
@@ -48,7 +49,6 @@ class HouseAdapter() :
             holder.binding.tvBedrooms.text = housesLists[position].bedrooms.toString()
             holder.binding.tvBathrooms.text = housesLists[position].bathrooms.toString()
             holder.binding.tvSize.text = housesLists[position].size.toString()
-
             // Image binding
             val url: String =
                 "https://intern.docker-dev.d-tt.nl" + housesLists[position].image
@@ -58,36 +58,23 @@ class HouseAdapter() :
                     .addHeader("Access-Key", "98bww4ezuzfePCYFxJEWyszbUXc7dxRx")
                     .build()
             )
-
             Glide.with(this).load(glideUrl).into(holder.binding.ivHouse)
+
+            holder.binding.cvHouseItem.setOnClickListener {
+                findNavController().navigate(R.id.action_overviewFragment_to_houseDetailFragment)
+            }
         }
-
-        // holder.binding.tvPrice.text = housesLists[position].price.toString()
-        // holder.binding.tvBedrooms.text = housesLists[position].bedrooms.toString()
-        // holder.binding.tvZipcode.text = housesLists[position].zip
-        // holder.binding.tvCity.text = housesLists[position].city
-
-
-        // holder.bind(houses[position])
     }
-
-    override fun getItemCount(): Int = housesLists.size
-
-    // class HouseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    //
-    //     private val binding = ItemHouseBinding.bind(view)
-    //
-    //     fun bind(house: HouseResponse) {
-    //         binding.tvPrice.text = house.price.toString()
-    //         binding.tvBedrooms.text = house.bedrooms.toString()
-    //         binding.tvZipcode.text = house.zip
-    //         binding.tvCity.text = house.city
-    //         Glide.with(itemView).load(house.image).into(binding.ivHouse)
-    //     }
-    // }
 
     fun setData(newList: List<HouseResponse>) {
         housesLists = newList
         notifyDataSetChanged()
+    }
+
+    /**
+     * Sets click listener that sends you to the house details screen
+     */
+    fun setOnClickListener(listener: (HouseResponse) -> Unit) {
+        onitemClickListener = listener
     }
 }
