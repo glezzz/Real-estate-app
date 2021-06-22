@@ -14,20 +14,19 @@ import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 
 
-class OverviewFragment : Fragment(R.layout.fragment_overview) {
+class OverviewFragment : Fragment(/*R.layout.fragment_overview*/) {
 
     lateinit var viewModel: MainViewModel
     lateinit var houseAdapter: HouseAdapter
-    // Redo this the right way VIEW BINDING inside Fragments
-    private var binding: FragmentOverviewBinding? = null
+    private var _binding: FragmentOverviewBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragmentBinding = FragmentOverviewBinding.inflate(inflater, container, false)
-        binding = fragmentBinding
-        return fragmentBinding.root
+        _binding = FragmentOverviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,15 +35,15 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
         setupRecyclerView()
 
 
-            // findNavController().navigate(
-            //     R.id.action_breakingsNewsFragment_to_articleFragment,
-            //     bundle
-            // )
-        }
+        // findNavController().navigate(
+        //     R.id.action_breakingsNewsFragment_to_articleFragment,
+        //     bundle
+        // )
+    }
 
     private fun setupRecyclerView() {
         houseAdapter = HouseAdapter()
-        binding?.rvHouses?.apply {
+        binding.rvHouses.apply {
             adapter = houseAdapter
             layoutManager = LinearLayoutManager(activity)
 
