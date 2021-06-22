@@ -1,5 +1,7 @@
 package com.project.dtttest.model
 
+import java.io.Serializable
+
 data class HouseResponse(
     val id: Int,
     val image: String,
@@ -13,5 +15,4 @@ data class HouseResponse(
     val latitude: Int,
     val longitude: Int,
     val createdDate: String
-) {
-}
+) : Serializable

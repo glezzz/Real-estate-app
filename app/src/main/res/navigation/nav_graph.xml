@@ -9,7 +9,11 @@
         android:id="@+id/houseDetailFragment"
         android:name="com.project.dtttest.ui.fragments.HouseDetailFragment"
         android:label="fragment_house_detail"
-        tools:layout="@layout/fragment_house_detail" />
+        tools:layout="@layout/fragment_house_detail">
+        <argument
+            android:name="house"
+            app:argType="com.project.dtttest.model.HouseResponse" />
+    </fragment>
     <fragment
         android:id="@+id/informationFragment"
         android:name="com.project.dtttest.ui.fragments.InformationFragment"
@@ -19,7 +23,7 @@
         android:id="@+id/overviewFragment"
         android:name="com.project.dtttest.ui.fragments.OverviewFragment"
         android:label="fragment_overview"
-        tools:layout="@layout/fragment_overview" >
+        tools:layout="@layout/fragment_overview">
         <action
             android:id="@+id/action_overviewFragment_to_houseDetailFragment"
             app:destination="@id/houseDetailFragment" />

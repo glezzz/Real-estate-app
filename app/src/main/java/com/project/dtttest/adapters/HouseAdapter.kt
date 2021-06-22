@@ -1,9 +1,10 @@
 package com.project.dtttest.adapters
 
+import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
@@ -15,10 +16,7 @@ import com.project.dtttest.model.HouseResponse
 class HouseAdapter() :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
 
-    private var housesLists = emptyList<HouseResponse>()
-
-    // Click listener to HouseDetailFragment
-    private var onitemClickListener: ((HouseResponse) -> Unit)? = null
+    private var housesList = emptyList<HouseResponse>()
 
     inner class HouseViewHolder(val binding: ItemHouseBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -38,20 +36,22 @@ class HouseAdapter() :
         // return HouseViewHolder(layoutInflater.inflate(R.layout.item_house, parent, false))
     }
 
-    override fun getItemCount(): Int = housesLists.size
+    override fun getItemCount(): Int = housesList.size
+
+    private var onItemClickListener: ((HouseResponse) -> Unit)? = null
 
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
-
+        val house = housesList[position]
         holder.itemView.apply {
-            holder.binding.tvPrice.text = "$" + housesLists[position].price.toString()
-            holder.binding.tvZipcode.text = housesLists[position].zip
-            holder.binding.tvCity.text = housesLists[position].city
-            holder.binding.tvBedrooms.text = housesLists[position].bedrooms.toString()
-            holder.binding.tvBathrooms.text = housesLists[position].bathrooms.toString()
-            holder.binding.tvSize.text = housesLists[position].size.toString()
+            holder.binding.tvPrice.text = "$" + housesList[position].price.toString()
+            holder.binding.tvZipcode.text = housesList[position].zip
+            holder.binding.tvCity.text = housesList[position].city
+            holder.binding.tvBedrooms.text = housesList[position].bedrooms.toString()
+            holder.binding.tvBathrooms.text = housesList[position].bathrooms.toString()
+            holder.binding.tvSize.text = housesList[position].size.toString()
             // Image binding
             val url: String =
-                "https://intern.docker-dev.d-tt.nl" + housesLists[position].image
+                "https://intern.docker-dev.d-tt.nl" + housesList[position].image
             val glideUrl = GlideUrl(
                 url,
                 LazyHeaders.Builder()
@@ -59,22 +59,46 @@ class HouseAdapter() :
                     .build()
             )
             Glide.with(this).load(glideUrl).into(holder.binding.ivHouse)
-
-            holder.binding.cvHouseItem.setOnClickListener {
-                findNavController().navigate(R.id.action_overviewFragment_to_houseDetailFragment)
+            setOnClickListener {
+                onItemClickListener?.let { it(house) }
             }
+
+            // holder.binding.cvHouseItem.setOnClickListener {
+            //     val bundle = Bundle().apply {
+            //         putSerializable("house", it)
+            //     }
+            //     findNavController().navigate(
+            //         R.id.action_overviewFragment_to_houseDetailFragment,
+            //         bundle
+            //     )
+            // }
+
+
+            // holder.binding.cvHouseItem.setOnClickListener {
+            //     findNavController().navigate(R.id.action_overviewFragment_to_houseDetailFragment)
+            // }
+
+            // houseAdapter.setOnItemClickListener {
+            //     val bundle = Bundle().apply {
+            //         putSerializable("house", it)
+            //     }
+            //     findNavController().navigate(
+            //         R.id.action_overviewFragment_to_houseDetailFragment,
+            //         bundle
+            //     )
+            // }
         }
     }
 
     fun setData(newList: List<HouseResponse>) {
-        housesLists = newList
+        housesList = newList
         notifyDataSetChanged()
     }
 
     /**
-     * Sets click listener that sends you to the house details screen
+     * Sets the click listener for the article to display
      */
-    fun setOnClickListener(listener: (HouseResponse) -> Unit) {
-        onitemClickListener = listener
+    fun setOnItemClickListener(listener: (HouseResponse) -> Unit) {
+        onItemClickListener = listener
     }
 }
