@@ -15,7 +15,6 @@ import com.project.dtttest.databinding.FragmentOverviewBinding
 import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 
-
 class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
     lateinit var viewModel: MainViewModel
@@ -58,8 +57,5 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
             layoutManager = LinearLayoutManager(activity)
 
         }
-
-        // binding.rvHouses.adapter = houseAdapter
-        // binding.rvHouses.layoutManager = LinearLayoutManager(this)
     }
 }

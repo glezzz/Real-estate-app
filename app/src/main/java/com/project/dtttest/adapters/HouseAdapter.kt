@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
+import com.project.dtttest.R
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 
-class HouseAdapter(/*private val houses: List<HouseResponse>*/) :
+class HouseAdapter() :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
 
     private var housesLists = emptyList<HouseResponse>()
@@ -34,12 +35,21 @@ class HouseAdapter(/*private val houses: List<HouseResponse>*/) :
     }
 
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
+
+        val intArray = intArrayOf(housesLists[position].price)
+        intArray.sort()
+
+
+
         holder.itemView.apply {
-            holder.binding.tvPrice.text = housesLists[position].price.toString()
-            holder.binding.tvBedrooms.text = housesLists[position].bedrooms.toString()
+            holder.binding.tvPrice.text = "$" + housesLists[position].price.toString()
             holder.binding.tvZipcode.text = housesLists[position].zip
             holder.binding.tvCity.text = housesLists[position].city
+            holder.binding.tvBedrooms.text = housesLists[position].bedrooms.toString()
+            holder.binding.tvBathrooms.text = housesLists[position].bathrooms.toString()
+            holder.binding.tvSize.text = housesLists[position].size.toString()
 
+            // Image binding
             val url: String =
                 "https://intern.docker-dev.d-tt.nl" + housesLists[position].image
             val glideUrl = GlideUrl(
