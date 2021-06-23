@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">DTT test</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+<!--    <string name="dtt_hyperlink"><a href="http://https://www.d-tt.nl/"/></string>-->
 </resources>

@@ -11,15 +11,20 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.project.dtttest.R
 import com.project.dtttest.databinding.ActivityMainBinding
 import com.project.dtttest.repository.Repository
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     lateinit var viewModel: MainViewModel
     private val houseAdapter by lazy { HouseAdapter() }
     private lateinit var navController: NavController
+
+    private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,16 @@ class MainActivity : AppCompatActivity() {
         // })
 
         binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
+    }
+
+    private fun initGoogleMap(){
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.frMap) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
     }
 
 

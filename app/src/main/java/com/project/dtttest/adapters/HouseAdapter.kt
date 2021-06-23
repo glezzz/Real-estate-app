@@ -3,6 +3,8 @@ package com.project.dtttest.adapters
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +15,8 @@ import com.project.dtttest.R
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 
-class HouseAdapter() :
-    RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
+class HouseAdapter :
+    RecyclerView.Adapter<HouseAdapter.HouseViewHolder>()/*, Filterable*/ {
 
     private var housesList = emptyList<HouseResponse>()
 
@@ -32,8 +34,6 @@ class HouseAdapter() :
                 false
             )
         )
-        // val layoutInflater = LayoutInflater.from(parent.context)
-        // return HouseViewHolder(layoutInflater.inflate(R.layout.item_house, parent, false))
     }
 
     override fun getItemCount(): Int = housesList.size
@@ -62,31 +62,6 @@ class HouseAdapter() :
             setOnClickListener {
                 onItemClickListener?.let { it(house) }
             }
-
-            // holder.binding.cvHouseItem.setOnClickListener {
-            //     val bundle = Bundle().apply {
-            //         putSerializable("house", it)
-            //     }
-            //     findNavController().navigate(
-            //         R.id.action_overviewFragment_to_houseDetailFragment,
-            //         bundle
-            //     )
-            // }
-
-
-            // holder.binding.cvHouseItem.setOnClickListener {
-            //     findNavController().navigate(R.id.action_overviewFragment_to_houseDetailFragment)
-            // }
-
-            // houseAdapter.setOnItemClickListener {
-            //     val bundle = Bundle().apply {
-            //         putSerializable("house", it)
-            //     }
-            //     findNavController().navigate(
-            //         R.id.action_overviewFragment_to_houseDetailFragment,
-            //         bundle
-            //     )
-            // }
         }
     }
 
@@ -96,7 +71,7 @@ class HouseAdapter() :
     }
 
     /**
-     * Sets the click listener for the article to display
+     * Sets the click listener for the detailed view to display
      */
     fun setOnItemClickListener(listener: (HouseResponse) -> Unit) {
         onItemClickListener = listener
