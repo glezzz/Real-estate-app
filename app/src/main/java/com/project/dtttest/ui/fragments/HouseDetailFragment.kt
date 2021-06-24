@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -22,7 +23,7 @@ import com.project.dtttest.ui.MainViewModel
 import com.project.dtttest.utils.Constants.Companion.MAPVIEW_BUNDLE_KEY
 
 
-class HouseDetailFragment : Fragment()/*, OnMapReadyCallback*/ {
+class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentHouseDetailBinding? = null
     private val binding get() = _binding!!
@@ -76,28 +77,55 @@ class HouseDetailFragment : Fragment()/*, OnMapReadyCallback*/ {
                 .build()
         )
         Glide.with(this).load(glideUrl).into(binding.ivHouseDetail)
+
+        initGoogleMap()
     }
 
-    // private fun initGoogleMap(){
-    //     val mapFragment = supportFragmentManager
-    //         .findFragmentById(R.id.frMap) as SupportMapFragment
-    //     mapFragment.getMapAsync(this)
+    // override fun onCreate(savedInstanceState: Bundle?) {
+    //     super.onCreate(savedInstanceState)
+    //     initGoogleMap()
+    //
     // }
     //
-    //
+    private fun initGoogleMap() {
+        val mapFragment = childFragmentManager
+            .findFragmentById(R.id.frMap) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        createMarker()
+    }
+
+    private fun createMarker() {
+        val house = args.house
+        val favoritePlace = LatLng(house.latitude.toDouble(), house.longitude.toDouble())
+        //val favoritePlace = LatLng(28.044195, -16.5363842)
+        map.addMarker(MarkerOptions().position(favoritePlace).title("Mi playa favorita!"))
+        map.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(favoritePlace, 18f)
+        )
+    }
+
     // override fun onMapReady(googleMap: GoogleMap) {
-    //     map = googleMap
-    //     //createMarker()
+    //     googleMap.addMarker(
+    //         MarkerOptions()
+    //             .position(LatLng(house.latitude.toDouble(), house.longitude.toDouble()))
+    //             .title("Marker")
+    //     )
     // }
 
-    // private fun createMarker() {
-    //     val favoritePlace = LatLng(28.044195,-16.5363842)
-    //     map.addMarker(MarkerOptions().position(favoritePlace).title("Mi playa favorita!"))
-    //     map.animateCamera(
-    //         CameraUpdateFactory.newLatLngZoom(favoritePlace, 18f),
-    //         4000,
-    //         null
-    //     )
+    // override fun onMapReady(googleMap: GoogleMap) {
+    //     map = googleMap
+    //     createMarker(house.latitude.toDouble(), house.longitude.toDouble())
+    // }
+    //
+    // private fun createMarker(lat: Double, long: Double) {
+    //     val coordinates = LatLng(lat, long)
+    //     //val coordinates = LatLng(28.043893, -16.539329)
+    //     val marker = MarkerOptions().position(coordinates)
+    //     map.addMarker(marker)
     // }
 
 

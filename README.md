@@ -29,7 +29,7 @@ App I'm building as a test for an application to a traineeship.
 - [x] As a user, I should be able to access the details of a house in order to learn
       more about the property.
       
-- [ ] As a user, I should be able to see a pin on the map showing the location of
+- [x] As a user, I should be able to see a pin on the map showing the location of
       the house in order to get an idea where it is.
       
 - [x] As a user, I should be able to access the about page in order to know more
