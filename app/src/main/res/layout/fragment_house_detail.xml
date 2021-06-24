@@ -12,6 +12,7 @@
 
     <ImageView
         android:id="@+id/ivHouseDetail"
+        android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="186dp"
         tools:src="@tools:sample/backgrounds/scenic" />

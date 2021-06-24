@@ -14,6 +14,7 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.project.dtttest.R
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
+import java.text.DecimalFormat
 
 class HouseAdapter :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>()/*, Filterable*/ {
@@ -43,7 +44,11 @@ class HouseAdapter :
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
         val house = housesList[position]
         holder.itemView.apply {
-            holder.binding.tvPrice.text = "$" + housesList[position].price.toString()
+
+            val formattedPrice = DecimalFormat("#,###").format(
+                housesList[position].price
+            )
+            holder.binding.tvPrice.text = "$" + formattedPrice
             holder.binding.tvZipcode.text = housesList[position].zip
             holder.binding.tvCity.text = housesList[position].city
             holder.binding.tvBedrooms.text = housesList[position].bedrooms.toString()

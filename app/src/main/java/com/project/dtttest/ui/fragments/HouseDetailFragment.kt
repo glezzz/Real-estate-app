@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -20,8 +19,7 @@ import com.project.dtttest.R
 import com.project.dtttest.databinding.FragmentHouseDetailBinding
 import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
-import com.project.dtttest.utils.Constants.Companion.MAPVIEW_BUNDLE_KEY
-
+import java.text.DecimalFormat
 
 class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
@@ -29,9 +27,9 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
     private val binding get() = _binding!!
     lateinit var viewModel: MainViewModel
 
-    private lateinit var map: GoogleMap
-
     private val args: HouseDetailFragmentArgs by navArgs()
+
+    private lateinit var map: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,33 +39,21 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
-    // override fun onCreate(savedInstanceState: Bundle?) {
-    //     super.onCreate(savedInstanceState)
-    //
-    //     initGoogleMap(savedInstanceState)
-    // }
-    //
-    // private fun initGoogleMap(savedInstanceState: Bundle?) {
-    //     // *** IMPORTANT ***
-    //     // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
-    //     // objects or sub-Bundles.
-    //     var mapViewBundle: Bundle? = null
-    //     if (savedInstanceState != null) {
-    //         mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
-    //     }
-    //     binding.mvMap.onCreate(mapViewBundle)
-    //     binding.mvMap.getMapAsync(this)
-    // }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val house = args.house
         viewModel = (activity as MainActivity).viewModel
         binding.tvDescription.text = house.description
-        binding.tvPriceDetail.text = "$" + house.price.toString()
+
+        val formattedPrice = DecimalFormat("#,###").format(
+            house.price
+        )
+        binding.tvPriceDetail.text = "$" + formattedPrice
+
         binding.tvBedroomsDetail.text = house.bedrooms.toString()
         binding.tvBathroomsDetail.text = house.bathrooms.toString()
         binding.tvSizeDetail.text = house.size.toString()
+
         val url: String =
             "https://intern.docker-dev.d-tt.nl" + house.image
         val glideUrl = GlideUrl(
@@ -81,12 +67,9 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         initGoogleMap()
     }
 
-    // override fun onCreate(savedInstanceState: Bundle?) {
-    //     super.onCreate(savedInstanceState)
-    //     initGoogleMap()
-    //
-    // }
-    //
+    /**
+     * Initializes Google Maps fragment for house location
+     */
     private fun initGoogleMap() {
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.frMap) as SupportMapFragment?
@@ -98,35 +81,21 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         createMarker()
     }
 
+    /**
+     * Creates marker for exact location of house
+     */
     private fun createMarker() {
         val house = args.house
-        val favoritePlace = LatLng(house.latitude.toDouble(), house.longitude.toDouble())
-        //val favoritePlace = LatLng(28.044195, -16.5363842)
-        map.addMarker(MarkerOptions().position(favoritePlace).title("Mi playa favorita!"))
+        val houseLocation = LatLng(house.latitude.toDouble(), house.longitude.toDouble())
+        map.addMarker(MarkerOptions().position(houseLocation))
         map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(favoritePlace, 18f)
+            CameraUpdateFactory.newLatLngZoom(houseLocation, 12f),
+            1,
+            null
         )
     }
 
-    // override fun onMapReady(googleMap: GoogleMap) {
-    //     googleMap.addMarker(
-    //         MarkerOptions()
-    //             .position(LatLng(house.latitude.toDouble(), house.longitude.toDouble()))
-    //             .title("Marker")
-    //     )
-    // }
+    private fun calculateDistance() {
 
-    // override fun onMapReady(googleMap: GoogleMap) {
-    //     map = googleMap
-    //     createMarker(house.latitude.toDouble(), house.longitude.toDouble())
-    // }
-    //
-    // private fun createMarker(lat: Double, long: Double) {
-    //     val coordinates = LatLng(lat, long)
-    //     //val coordinates = LatLng(28.043893, -16.539329)
-    //     val marker = MarkerOptions().position(coordinates)
-    //     map.addMarker(marker)
-    // }
-
-
+    }
 }

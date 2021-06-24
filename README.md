@@ -35,6 +35,6 @@ App I'm building as a test for an application to a traineeship.
 - [x] As a user, I should be able to access the about page in order to know more
       about the app and its developers.
       
-- [ ] As a user, I should be able to get directions to a house by tapping on the
+- [x] As a user, I should be able to get directions to a house by tapping on the
       map component on the details page in order to navigate to the property
       using the Google Maps app.
