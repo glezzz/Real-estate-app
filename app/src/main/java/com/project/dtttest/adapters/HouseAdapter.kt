@@ -1,22 +1,18 @@
 package com.project.dtttest.adapters
 
-import android.os.Bundle
+import android.location.Location
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
-import com.project.dtttest.R
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
+import com.project.dtttest.ui.fragments.OverviewFragment
 import java.text.DecimalFormat
 
-class HouseAdapter :
+class HouseAdapter(overviewFragment: OverviewFragment) :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>()/*, Filterable*/ {
 
     private var housesList = emptyList<HouseResponse>()
@@ -41,6 +37,7 @@ class HouseAdapter :
 
     private var onItemClickListener: ((HouseResponse) -> Unit)? = null
 
+    private var userCoordinates = overviewFragment.userCoordinates
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
         val house = housesList[position]
         holder.itemView.apply {
@@ -54,6 +51,18 @@ class HouseAdapter :
             holder.binding.tvBedrooms.text = housesList[position].bedrooms.toString()
             holder.binding.tvBathrooms.text = housesList[position].bathrooms.toString()
             holder.binding.tvSize.text = housesList[position].size.toString()
+            // Calculate distance between house & user location
+            if (userCoordinates.isNotEmpty()) {
+                holder.binding.tvDistance.text = calculateDistance(
+                    userCoordinates[0],
+                    userCoordinates[1],
+                    housesList[position].latitude.toDouble(),
+                    housesList[position].longitude.toDouble()
+                ).toString() + "km"
+
+            } else {
+                holder.binding.tvDistance.text = "Need Permissions"
+            }
             // Image binding
             val url: String =
                 "https://intern.docker-dev.d-tt.nl" + housesList[position].image
@@ -80,5 +89,20 @@ class HouseAdapter :
      */
     fun setOnItemClickListener(listener: (HouseResponse) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private fun calculateDistance(
+        latOwnLocation: Double,
+        lonOwnLocation: Double,
+        latHouseLocation: Double,
+        lonHouseLocation: Double
+    ): Float {
+        val distance = FloatArray(2)
+        Location.distanceBetween(
+            latOwnLocation, lonOwnLocation,
+            latHouseLocation, lonHouseLocation, distance
+        )
+
+        return DecimalFormat("#.#").format(distance[0] / 1000).toFloat()
     }
 }

@@ -28,7 +28,6 @@ import com.project.dtttest.repository.Repository
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: MainViewModel
-    private val houseAdapter by lazy { HouseAdapter() }
     private lateinit var navController: NavController
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -54,14 +53,5 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-    }
-
-    private fun getUserLocation() {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                // Got last known location. In some rare situations this can be null.
-            }
     }
 }

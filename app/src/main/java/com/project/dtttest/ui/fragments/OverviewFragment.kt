@@ -24,8 +24,7 @@ import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 import com.project.dtttest.ui.fragments.HouseDetailFragment.Companion.LOCATION_REQUEST_CODE
 
-// try to load without r.layout
-class OverviewFragment : Fragment(R.layout.fragment_overview) {
+class OverviewFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
     lateinit var houseAdapter: HouseAdapter
@@ -35,8 +34,6 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private val TAG = "My coordinates"
-
-    // private val mExampleList: ArrayList<>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +56,7 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
                 Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
             }
         })
-        // Send house data in bundle to HouseDetailFragment to display the one clicked
+        // Send house data in bundle to HouseDetailFragment to display the clicked house
         houseAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("house", it)
@@ -73,10 +70,13 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        // Instantiate Fused Location Provider Client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
     }
 
+    /**
+     * Request location permissions on start
+     */
     override fun onStart() {
         super.onStart()
         if (ContextCompat.checkSelfPermission(
@@ -90,7 +90,14 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
         }
     }
 
+    /**
+     * Request last known location of user's device,
+     * which is usually equivalent to the known location of device.
+     */
+    var userCoordinates =  mutableListOf<Double>()
     private fun getLastLocation() {
+
+
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -114,30 +121,20 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
                 if (location != null) {
                     //We have a location
                     Log.d(TAG, "onSuccess: $location")
+
                     Log.d(TAG, "onSuccess: " + location.latitude)
+                    userCoordinates.add(location.latitude)
+
                     Log.d(TAG, "onSuccess: " + location.longitude)
+                    userCoordinates.add(location.longitude)
+
+                    Log.d(TAG, "onSuccess: " + userCoordinates)
+
                 } else {
                     Log.d(TAG, "onSuccess: Location was null...")
                 }
             }
-
-        // val locationTask = fusedLocationProviderClient.lastLocation
-        // locationTask.addOnSuccessListener { location ->
-        //     if (location != null) {
-        //         //We have a location
-        //         Log.d(TAG, "onSuccess: $location")
-        //         Log.d(TAG, "onSuccess: " + location.latitude)
-        //         Log.d(TAG, "onSuccess: " + location.longitude)
-        //     } else {
-        //         Log.d(TAG, "onSuccess: Location was null...")
-        //     }
-        // }
-        // locationTask.addOnFailureListener { e ->
-        //     Log.e(
-        //         TAG,
-        //         "onFailure: " + e.localizedMessage
-        //     )
-        // }
+        return
     }
 
     private fun askLocationPermission() {
@@ -182,35 +179,8 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
         }
     }
 
-    // override fun onCreate(savedInstanceState: Bundle?) {
-    //     super.onCreate(savedInstanceState)
-    //     binding.etSearch.addTextChangedListener(object : TextWatcher {
-    //         override fun beforeTextChanged(
-    //             s: CharSequence?,
-    //             start: Int,
-    //             count: Int,
-    //             after: Int
-    //         ) {
-    //             TODO("Not yet implemented")
-    //         }
-    //
-    //         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-    //             TODO("Not yet implemented")
-    //         }
-    //
-    //         override fun afterTextChanged(s: Editable?) {
-    //             filter(s.toString())
-    //         }
-    //     })
-    //  }
-    //
-    // private fun filter(text: String) {
-    //     val houses = binding.rvHouses
-    //     val filteredList: ArrayList<> = ArrayList()
-    // }
-
     private fun setupRecyclerView() {
-        houseAdapter = HouseAdapter()
+        houseAdapter = HouseAdapter(this)
         binding.rvHouses.apply {
             adapter = houseAdapter
             layoutManager = LinearLayoutManager(activity)
