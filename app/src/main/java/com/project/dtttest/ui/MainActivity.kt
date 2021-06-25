@@ -1,16 +1,21 @@
 package com.project.dtttest.ui
 
+import android.location.Location
 import com.project.dtttest.adapters.HouseAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -25,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: MainViewModel
     private val houseAdapter by lazy { HouseAdapter() }
     private lateinit var navController: NavController
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +40,28 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
+        //Hide Bottom Navigation View in HouseDetailFragment
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.houseDetailFragment -> binding.bottomNavView.visibility = View.GONE
+                R.id.overviewFragment -> binding.bottomNavView.visibility = View.VISIBLE
+                R.id.informationFragment -> binding.bottomNavView.visibility = View.VISIBLE
+            }
+        }
+
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        // viewModel.getHouses()
-        // viewModel.myResponse.observe(this, Observer { response ->
-        //     if (response.isSuccessful) {
-        //         response.body()?.let { houseAdapter.setData(it) }
-        //     } else {
-        //         Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
-        //     }
-        // })
 
         binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    }
+
+    private fun getUserLocation() {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                // Got last known location. In some rare situations this can be null.
+            }
     }
 }
