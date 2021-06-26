@@ -26,7 +26,6 @@ import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 import com.project.dtttest.ui.fragments.HouseDetailFragment.Companion.LOCATION_REQUEST_CODE
 
-
 class OverviewFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
@@ -35,8 +34,6 @@ class OverviewFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-   // private lateinit var navController: NavController
 
     private val TAG = "My coordinates"
 
@@ -65,6 +62,7 @@ class OverviewFragment : Fragment() {
         houseAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("house", it)
+                // Bundle with user location to display in detail fragment
                 putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
             }
             findNavController().navigate(
@@ -72,20 +70,20 @@ class OverviewFragment : Fragment() {
                 bundle
             )
         }
+    }
 
-        // val bundle = Bundle()
-        // bundle.putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
-        // navController.navigate(R.id.action_overviewFragment_to_houseDetailFragment, bundle)
+    private fun setupRecyclerView() {
+        houseAdapter = HouseAdapter(this)
+        binding.rvHouses.apply {
+            adapter = houseAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Instantiate Fused Location Provider Client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-        // val bundle = Bundle()
-        // bundle.putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
-        // navController.navigate(R.id.action_overviewFragment_to_houseDetailFragment, bundle)
     }
 
     /**
@@ -108,7 +106,7 @@ class OverviewFragment : Fragment() {
      * Request last known location of user's device,
      * which is usually equivalent to the known location of device.
      */
-    var userCoordinates =  ArrayList<Double>()
+    var userCoordinates = ArrayList<Double>()
     private fun getLastLocation() {
 
         if (ActivityCompat.checkSelfPermission(
@@ -129,7 +127,7 @@ class OverviewFragment : Fragment() {
             return
         }
         fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
+            .addOnSuccessListener { location: Location? ->
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
                     //We have a location
@@ -183,20 +181,12 @@ class OverviewFragment : Fragment() {
         grantResults: IntArray
     ) {
         if (requestCode == LOCATION_REQUEST_CODE) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
                 getLastLocation()
             } else {
                 //Permission not granted
             }
-        }
-    }
-
-    private fun setupRecyclerView() {
-        houseAdapter = HouseAdapter(this)
-        binding.rvHouses.apply {
-            adapter = houseAdapter
-            layoutManager = LinearLayoutManager(activity)
         }
     }
 }

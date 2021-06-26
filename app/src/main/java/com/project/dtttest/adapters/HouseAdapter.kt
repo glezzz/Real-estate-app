@@ -55,8 +55,8 @@ class HouseAdapter(overviewFragment: OverviewFragment) :
             // Calculate distance between house & user location
             if (userCoordinates.isNotEmpty()) {
                 holder.binding.tvDistance.text = calculateDistance(
-                    userCoordinates[0],
-                    userCoordinates[1],
+                    userCoordinates[userCoordinates.lastIndex - 1],
+                    userCoordinates[userCoordinates.lastIndex],
                     housesList[position].latitude.toDouble(),
                     housesList[position].longitude.toDouble()
                 ).toString() + " km"

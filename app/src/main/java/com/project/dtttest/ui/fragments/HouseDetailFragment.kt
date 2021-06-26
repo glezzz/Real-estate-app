@@ -4,8 +4,10 @@ import android.Manifest
 import android.R.attr.defaultValue
 import android.R.attr.key
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +43,6 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var userCoordinates: DoubleArray
 
-    var locationManager: LocationManager? = null
-    private var latitude: String? = null
-    private var longitude: String? = null
     private val TAG = "My coordinates"
 
     companion object {
@@ -79,10 +78,19 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         binding.tvBedroomsDetail.text = house.bedrooms.toString()
         binding.tvBathroomsDetail.text = house.bathrooms.toString()
         binding.tvSizeDetail.text = house.size.toString()
-
-        // TODO Fix first time permissions allowed crashes app
+        // Calculate distance between user location and house
         if (userCoordinates.isNotEmpty()) {
-            binding.tvDistanceDetail.text = userCoordinates[0].toString()
+            binding.tvDistanceDetail.text = calculateDistance(
+                userCoordinates[userCoordinates.lastIndex - 1],
+                userCoordinates[userCoordinates.lastIndex],
+                house.latitude.toDouble(),
+                house.longitude.toDouble()
+            ).toString() + " km"
+        // Log.d(TAG, "user latitude: ${userCoordinates[0]}")
+        // Log.d(TAG, "user longitude: ${userCoordinates[1]}")
+        //     Log.d(TAG, "house latitude: ${house.latitude}")
+        //     Log.d(TAG, "house longitude: ${house.longitude}")
+
         } else {
             binding.tvDistanceDetail.text = "Need permissions"
         }
@@ -143,6 +151,9 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
+    /**
+     * Enables user location to be able to navigate to Google Maps directions
+     */
     private fun enableUserLocation() {
         if (!::map.isInitialized) return
         if (isLocationPermissionGranted()) {
@@ -177,7 +188,7 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         ) {
             Toast.makeText(
                 requireContext(),
-                "Ve a ajustes y acepta los permisos",
+                "Go to settings and accept permissions",
                 Toast.LENGTH_SHORT
             ).show()
         } else {
@@ -217,12 +228,30 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Para activar la localización ve a ajustes y acepta los permisos",
+                    "To activate user location go to settings and allow location permissions",
                     Toast.LENGTH_SHORT
                 ).show()
             }
             else -> {
             }
         }
+    }
+
+    /**
+     * Calculates distance between user location and house coordinates
+     */
+    private fun calculateDistance(
+        latOwnLocation: Double,
+        lonOwnLocation: Double,
+        latHouseLocation: Double,
+        lonHouseLocation: Double
+    ): Float {
+        val distance = FloatArray(2)
+        Location.distanceBetween(
+            latOwnLocation, lonOwnLocation,
+            latHouseLocation, lonHouseLocation, distance
+        )
+
+        return DecimalFormat("#.#").format(distance[0] / 1000).toFloat()
     }
 }
