@@ -1,6 +1,7 @@
 package com.project.dtttest.ui.fragments
 
 import android.Manifest
+import android.R.attr.key
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -24,6 +26,7 @@ import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 import com.project.dtttest.ui.fragments.HouseDetailFragment.Companion.LOCATION_REQUEST_CODE
 
+
 class OverviewFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
@@ -32,6 +35,8 @@ class OverviewFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+   // private lateinit var navController: NavController
 
     private val TAG = "My coordinates"
 
@@ -60,18 +65,27 @@ class OverviewFragment : Fragment() {
         houseAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("house", it)
+                putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
             }
             findNavController().navigate(
                 R.id.action_overviewFragment_to_houseDetailFragment,
                 bundle
             )
         }
+
+        // val bundle = Bundle()
+        // bundle.putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
+        // navController.navigate(R.id.action_overviewFragment_to_houseDetailFragment, bundle)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Instantiate Fused Location Provider Client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        // val bundle = Bundle()
+        // bundle.putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
+        // navController.navigate(R.id.action_overviewFragment_to_houseDetailFragment, bundle)
     }
 
     /**
@@ -94,9 +108,8 @@ class OverviewFragment : Fragment() {
      * Request last known location of user's device,
      * which is usually equivalent to the known location of device.
      */
-    var userCoordinates =  mutableListOf<Double>()
+    var userCoordinates =  ArrayList<Double>()
     private fun getLastLocation() {
-
 
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),

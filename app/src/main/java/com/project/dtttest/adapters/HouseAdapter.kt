@@ -35,6 +35,7 @@ class HouseAdapter(overviewFragment: OverviewFragment) :
 
     override fun getItemCount(): Int = housesList.size
 
+    // Card click listener
     private var onItemClickListener: ((HouseResponse) -> Unit)? = null
 
     private var userCoordinates = overviewFragment.userCoordinates
@@ -58,7 +59,7 @@ class HouseAdapter(overviewFragment: OverviewFragment) :
                     userCoordinates[1],
                     housesList[position].latitude.toDouble(),
                     housesList[position].longitude.toDouble()
-                ).toString() + "km"
+                ).toString() + " km"
 
             } else {
                 holder.binding.tvDistance.text = "Need Permissions"
@@ -73,6 +74,7 @@ class HouseAdapter(overviewFragment: OverviewFragment) :
                     .build()
             )
             Glide.with(this).load(glideUrl).into(holder.binding.ivHouse)
+            // Card click listener
             setOnClickListener {
                 onItemClickListener?.let { it(house) }
             }
@@ -91,6 +93,9 @@ class HouseAdapter(overviewFragment: OverviewFragment) :
         onItemClickListener = listener
     }
 
+    /**
+     * Calculates distance between user location and house coordinates
+     */
     private fun calculateDistance(
         latOwnLocation: Double,
         lonOwnLocation: Double,

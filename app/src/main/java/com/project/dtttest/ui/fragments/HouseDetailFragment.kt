@@ -1,8 +1,9 @@
 package com.project.dtttest.ui.fragments
 
 import android.Manifest
+import android.R.attr.defaultValue
+import android.R.attr.key
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,22 +13,16 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
 import com.project.dtttest.R
 import com.project.dtttest.databinding.FragmentHouseDetailBinding
 import com.project.dtttest.ui.MainActivity
@@ -39,12 +34,12 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentHouseDetailBinding? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: MainViewModel
-   // private lateinit var maps: Maps
+    private lateinit var viewModel: MainViewModel
+    // private lateinit var maps: Maps
 
-    val args: HouseDetailFragmentArgs by navArgs()
+    private val args: HouseDetailFragmentArgs by navArgs()
 
-    //private lateinit var navController: NavController
+    private lateinit var userCoordinates: DoubleArray
 
     var locationManager: LocationManager? = null
     private var latitude: String? = null
@@ -63,12 +58,13 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
-    // override fun onCreate(savedInstanceState: Bundle?) {
-    //     super.onCreate(savedInstanceState)
-    //     val navHostFragment = childFragmentManager
-    //         .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-    //     navController = navHostFragment.navController
-    // }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.getDoubleArray("userCoordinates")?.let { userCoord ->
+            userCoordinates = userCoord
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,14 +73,19 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         viewModel = (activity as MainActivity).viewModel
         binding.tvDescription.text = house.description
 
-        val formattedPrice = DecimalFormat("#,###").format(
-            house.price
-        )
+        val formattedPrice = DecimalFormat("#,###").format(house.price)
         binding.tvPriceDetail.text = "$" + formattedPrice
 
         binding.tvBedroomsDetail.text = house.bedrooms.toString()
         binding.tvBathroomsDetail.text = house.bathrooms.toString()
         binding.tvSizeDetail.text = house.size.toString()
+
+        // TODO Fix first time permissions allowed crashes app
+        if (userCoordinates.isNotEmpty()) {
+            binding.tvDistanceDetail.text = userCoordinates[0].toString()
+        } else {
+            binding.tvDistanceDetail.text = "Need permissions"
+        }
 
         val url: String =
             "https://intern.docker-dev.d-tt.nl" + house.image
@@ -96,10 +97,11 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         )
         Glide.with(this).load(glideUrl).into(binding.ivHouseDetail)
 
-       /* maps.*/initGoogleMap()
+        /* maps.*/initGoogleMap()
 
 
     }
+
 
     private lateinit var map: GoogleMap
 

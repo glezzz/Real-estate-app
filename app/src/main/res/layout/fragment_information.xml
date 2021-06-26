@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:text="d-tt.nl"
-                android:textSize="10dp"/>
+                android:textSize="13dp"/>
             <!--make this a link-->
 
         </LinearLayout>
