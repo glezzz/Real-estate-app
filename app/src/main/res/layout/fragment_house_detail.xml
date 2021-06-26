@@ -29,9 +29,9 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cvDetails"
             android:layout_width="match_parent"
-            android:layout_height="573dp"
+            android:layout_height="557dp"
             android:layout_marginTop="173dp"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/light_gray"
             app:cardCornerRadius="12dp">
 
             <LinearLayout
