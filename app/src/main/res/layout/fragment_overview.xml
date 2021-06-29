@@ -19,31 +19,33 @@
         android:textSize="16dp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvSearch"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiSearch"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginRight="16dp"
-        app:cardCornerRadius="7dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@color/light"
+        android:textSize="12dp"
+        app:boxBackgroundColor="@color/dark_gray"
+        app:boxCornerRadiusBottomEnd="6dp"
+        app:boxCornerRadiusBottomStart="6dp"
+        app:boxCornerRadiusTopEnd="6dp"
+        app:boxCornerRadiusTopStart="6dp"
+        app:boxStrokeWidth="0dp"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconMode="custom"
+        app:hintEnabled="false"
         app:layout_constraintTop_toBottomOf="@id/tvDttRealEstate">
 
-        <EditText
-            android:id="@+id/etSearch"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark_gray"
-            android:hint="Search for a home"
-            android:paddingLeft="5dp"
-            android:textColor="@color/light"
-            android:textSize="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:hint="Search for home"
+            android:lines="1" />
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHouses"
@@ -51,6 +53,27 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvSearch" />
+        app:layout_constraintTop_toBottomOf="@+id/tiSearch"
+        tools:listitem="@layout/item_house" />
+
+    <LinearLayout
+        android:id="@+id/rlNoData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search_state_empty"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No results found" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

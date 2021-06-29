@@ -6,12 +6,13 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -22,16 +23,21 @@ import com.google.android.gms.location.LocationServices
 import com.project.dtttest.R
 import com.project.dtttest.adapters.HouseAdapter
 import com.project.dtttest.databinding.FragmentOverviewBinding
+import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 import com.project.dtttest.ui.fragments.HouseDetailFragment.Companion.LOCATION_REQUEST_CODE
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class OverviewFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
     lateinit var houseAdapter: HouseAdapter
     private var _binding: FragmentOverviewBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -53,7 +59,7 @@ class OverviewFragment : Fragment() {
         viewModel.getHouses()
         viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
             if (response.isSuccessful) {
-                response.body()?.let { houseAdapter.setData(it) }
+                response.body()?.let { houseAdapter.setData(it as ArrayList<HouseResponse>) }
             } else {
                 Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
             }
@@ -70,10 +76,13 @@ class OverviewFragment : Fragment() {
                 bundle
             )
         }
+
+
+        binding.tietSearch.doOnTextChanged { text, _, _, _ ->  houseAdapter.filter.filter(text)}
     }
 
     private fun setupRecyclerView() {
-        houseAdapter = HouseAdapter(this)
+        houseAdapter = HouseAdapter(this, requireContext())
         binding.rvHouses.apply {
             adapter = houseAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -84,6 +93,18 @@ class OverviewFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // Instantiate Fused Location Provider Client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        // binding.svSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        //     override fun onQueryTextSubmit(query: String?): Boolean {
+        //         return false
+        //     }
+        //
+        //     override fun onQueryTextChange(newText: String?): Boolean {
+        //         houseAdapter.filter.filter(newText)
+        //         return false
+        //     }
+        // })
+
     }
 
     /**
@@ -140,9 +161,11 @@ class OverviewFragment : Fragment() {
                     userCoordinates.add(location.longitude)
 
                     Log.d(TAG, "onSuccess: " + userCoordinates)
+                    houseAdapter.notifyDataSetChanged()
 
                 } else {
                     Log.d(TAG, "onSuccess: Location was null...")
+
                 }
             }
         return
@@ -183,7 +206,11 @@ class OverviewFragment : Fragment() {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
+                    Log.d(TAG, "permission granted")
                 getLastLocation()
+                Log.d(TAG, "get last location done")
+
+
             } else {
                 //Permission not granted
             }

@@ -31,7 +31,6 @@ import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 import java.text.DecimalFormat
 
-
 open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentHouseDetailBinding? = null

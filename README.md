@@ -4,7 +4,7 @@ App I'm building as a test for an application to a traineeship.
 
 ● This app should successfully meet the following requirements;
 
-- [ ] As a user, I should be able to see the DTT splash screen in order to have a
+- [x] As a user, I should be able to see the DTT splash screen in order to have a
       sense of DTT branding.
       
 - [x] As a user, I should be able to access the “HOT HOUSES” page in order to
@@ -13,11 +13,11 @@ App I'm building as a test for an application to a traineeship.
 - [ ] As a user, I should be able to see the list of houses ordered by price
       (cheapest first) in order to find the cheaper properties.
       
-- [ ] As a user, I should be able to authorise access to my location when
+- [x] As a user, I should be able to authorise access to my location when
       accessing the “HOT HOUSES” page in order to be informed of how far each
       house is from my location.
       
-- [ ] As a user, I should be able to deny access to my location when accessing
+- [x] As a user, I should be able to deny access to my location when accessing
       the “HOT HOUSES” page in order to protect my privacy.
       
 - [ ] As a user, I should be able to search through the list of houses via the
