@@ -10,7 +10,7 @@ App I'm building as a test for an application to a traineeship.
 - [x] As a user, I should be able to access the “HOT HOUSES” page in order to
       browse a list of houses.
       
-- [ ] As a user, I should be able to see the list of houses ordered by price
+- [x] As a user, I should be able to see the list of houses ordered by price
       (cheapest first) in order to find the cheaper properties.
       
 - [x] As a user, I should be able to authorise access to my location when
@@ -20,10 +20,10 @@ App I'm building as a test for an application to a traineeship.
 - [x] As a user, I should be able to deny access to my location when accessing
       the “HOT HOUSES” page in order to protect my privacy.
       
-- [ ] As a user, I should be able to search through the list of houses via the
+- [x] As a user, I should be able to search through the list of houses via the
       address in order to find a specific item.
       
-- [ ] As a user, I should be able to know when my search did not find any results
+- [x] As a user, I should be able to know when my search did not find any results
       in order to try again.
       
 - [x] As a user, I should be able to access the details of a house in order to learn

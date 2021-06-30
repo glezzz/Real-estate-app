@@ -76,13 +76,13 @@ class OverviewFragment : Fragment() {
                 bundle
             )
         }
-
-
+        // Search function
         binding.tietSearch.doOnTextChanged { text, _, _, _ ->  houseAdapter.filter.filter(text)}
+
     }
 
     private fun setupRecyclerView() {
-        houseAdapter = HouseAdapter(this, requireContext())
+        houseAdapter = HouseAdapter(this)
         binding.rvHouses.apply {
             adapter = houseAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -93,18 +93,6 @@ class OverviewFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // Instantiate Fused Location Provider Client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-        // binding.svSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-        //     override fun onQueryTextSubmit(query: String?): Boolean {
-        //         return false
-        //     }
-        //
-        //     override fun onQueryTextChange(newText: String?): Boolean {
-        //         houseAdapter.filter.filter(newText)
-        //         return false
-        //     }
-        // })
-
     }
 
     /**

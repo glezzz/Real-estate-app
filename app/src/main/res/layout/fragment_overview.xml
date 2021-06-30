@@ -24,19 +24,21 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="14dp"
+        android:focusableInTouchMode="true"
         android:textColor="@color/light"
         android:textSize="12dp"
         app:boxBackgroundColor="@color/dark_gray"
-        app:boxCornerRadiusBottomEnd="6dp"
-        app:boxCornerRadiusBottomStart="6dp"
-        app:boxCornerRadiusTopEnd="6dp"
-        app:boxCornerRadiusTopStart="6dp"
+        app:boxCornerRadiusBottomEnd="13dp"
+        app:boxCornerRadiusBottomStart="13dp"
+        app:boxCornerRadiusTopEnd="13dp"
+        app:boxCornerRadiusTopStart="13dp"
         app:boxStrokeWidth="0dp"
-        app:endIconDrawable="@drawable/ic_search"
-        app:endIconMode="custom"
+        app:endIconMode="clear_text"
         app:hintEnabled="false"
-        app:layout_constraintTop_toBottomOf="@id/tvDttRealEstate">
+        app:layout_constraintTop_toBottomOf="@id/tvDttRealEstate"
+        app:startIconDrawable="@drawable/ic_search">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tietSearch"
@@ -67,12 +69,21 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/search_state_empty"/>
+            android:src="@drawable/search_state_empty" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No results found" />
+            android:fontFamily="@font/gothamssm_book"
+            android:text="No results found"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gothamssm_book"
+            android:text="Perhaps try another search?"
+            android:textSize="12dp" />
 
     </LinearLayout>
 

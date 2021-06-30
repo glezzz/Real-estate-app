@@ -69,6 +69,7 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
         val house = args.house
         viewModel = (activity as MainActivity).viewModel
+
         binding.tvDescription.text = house.description
 
         val formattedPrice = DecimalFormat("#,###").format(house.price)
@@ -106,9 +107,11 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
         /* maps.*/initGoogleMap()
 
-
+        // Back icon click listener
+        binding.ivBackBtn.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
     }
-
 
     private lateinit var map: GoogleMap
 

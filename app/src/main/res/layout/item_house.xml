@@ -5,10 +5,10 @@
     android:id="@+id/cvHouseItem"
     android:layout_width="match_parent"
     android:layout_height="96dp"
-    android:layout_marginLeft="16dp"
+    android:layout_marginHorizontal="16dp"
     android:layout_marginTop="12dp"
-    android:layout_marginRight="16dp"
     android:clickable="true"
+    android:focusable="true"
     android:padding="10dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="11dp"
@@ -45,12 +45,12 @@
             <TextView
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Price"
-                android:textSize="16dp"
+                android:fontFamily="@font/gothamssm_bold"
                 android:textColor="@color/strong"
-                android:fontFamily="@font/gothamssm_bold"/>
+                android:textSize="16dp"
+                tools:text="Price" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,16 +62,20 @@
                     android:id="@+id/tvZipcode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    android:text="Zipcode"
-                    android:textSize="12dp" />
+                    android:layout_marginEnd="3dp"
+                    android:fontFamily="@font/gothamssm_medium"
+                    android:textColor="@color/medium"
+                    android:textSize="12dp"
+                    tools:text="Zipcode" />
 
                 <TextView
                     android:id="@+id/tvCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="City"
-                    android:textSize="12dp" />
+                    android:fontFamily="@font/gothamssm_medium"
+                    android:textColor="@color/medium"
+                    android:textSize="12dp"
+                    tools:text="City" />
 
             </LinearLayout>
 
@@ -84,60 +88,73 @@
                     android:id="@+id/ivBedrooms"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:layout_marginRight="4dp"
-                    app:srcCompat="@drawable/ic_bed" />
+                    android:layout_marginEnd="4dp"
+                    app:srcCompat="@drawable/ic_bed"
+                    app:tint="@color/medium" />
 
                 <TextView
                     android:id="@+id/tvBedrooms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="Bedrooms"
-                    android:textSize="10dp" />
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/gothamssm_medium"
+                    android:textColor="@color/medium"
+                    android:textSize="10dp"
+                    tools:text="2" />
 
                 <ImageView
                     android:id="@+id/ivBathrooms"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:layout_marginRight="4dp"
-                    app:srcCompat="@drawable/ic_bath" />
+                    android:layout_marginEnd="4dp"
+                    app:srcCompat="@drawable/ic_bath"
+                    app:tint="@color/medium" />
 
                 <TextView
                     android:id="@+id/tvBathrooms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="Bathrooms"
-                    android:textSize="10dp" />
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/gothamssm_medium"
+                    android:textColor="@color/medium"
+                    android:textSize="10dp"
+                    tools:text="3" />
 
                 <ImageView
                     android:id="@+id/ivSize"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:layout_marginRight="4dp"
-                    app:srcCompat="@drawable/ic_layers" />
+                    android:layout_marginEnd="4dp"
+                    app:srcCompat="@drawable/ic_layers"
+                    app:tint="@color/medium" />
 
                 <TextView
                     android:id="@+id/tvSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="Size"
-                    android:textSize="10dp" />
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/gothamssm_medium"
+                    android:textSize="10dp"
+                    tools:text="65"
+                    android:textColor="@color/medium"/>
 
                 <ImageView
                     android:id="@+id/ivDistance"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:layout_marginRight="4dp"
-                    app:srcCompat="@drawable/ic_location" />
+                    android:layout_marginEnd="4dp"
+                    android:textColor="@color/medium"
+                    app:srcCompat="@drawable/ic_location"
+                    app:tint="@color/medium" />
 
                 <TextView
                     android:id="@+id/tvDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Distance"
-                    android:textSize="10dp" />
+                    android:fontFamily="@font/gothamssm_medium"
+                    android:textColor="@color/medium"
+                    android:textSize="10dp"
+                    tools:text="58.9" />
 
             </LinearLayout>
 
