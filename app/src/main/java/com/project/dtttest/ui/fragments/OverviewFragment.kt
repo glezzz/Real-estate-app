@@ -1,21 +1,19 @@
 package com.project.dtttest.ui.fragments
 
 import android.Manifest
-import android.R.attr.key
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.SearchView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,10 +25,6 @@ import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.MainActivity
 import com.project.dtttest.ui.MainViewModel
 import com.project.dtttest.ui.fragments.HouseDetailFragment.Companion.LOCATION_REQUEST_CODE
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class OverviewFragment : Fragment() {
 
@@ -52,12 +46,16 @@ class OverviewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG,"onViewCreated()")
+
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
         viewModel.getHouses()
         viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
+            Log.d(TAG,"myResponse.observe() ${response.isSuccessful}")
+
             if (response.isSuccessful) {
                 response.body()?.let { houseAdapter.setData(it as ArrayList<HouseResponse>) }
             } else {
@@ -77,8 +75,13 @@ class OverviewFragment : Fragment() {
             )
         }
         // Search function
-        binding.tietSearch.doOnTextChanged { text, _, _, _ ->  houseAdapter.filter.filter(text)}
+        binding.tietSearch.doOnTextChanged { text, _, _, count ->
+            run {
+                Log.d(TAG, "doOnTextChanged() $text, $count")
 
+                houseAdapter.filter.filter(text)
+            }
+        }
     }
 
     private fun setupRecyclerView() {

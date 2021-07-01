@@ -1,6 +1,7 @@
 package com.project.dtttest.adapters
 
 import android.location.Location
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +22,10 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>(), Filterable {
 
     private var housesList = emptyList<HouseResponse>()
+    private var housesListInitialized = false
     private var visibleHousesList = emptyList<HouseResponse>()
 
-    private val TAG = "houses"
+    private val TAG = "publishResults else"
 
     inner class HouseViewHolder(val binding: ItemHouseBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -102,6 +104,7 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
     fun setData(newList: List<HouseResponse>) {
         housesList = ArrayList<HouseResponse>(newList).sortedBy { it.price }
         visibleHousesList = housesList
+        housesListInitialized = true
         notifyDataSetChanged()
     }
 
@@ -133,12 +136,21 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): FilterResults {
+                Log.d(TAG, "performFiltering invoked: '$constraint', ${housesList.size}")
+                if (!housesListInitialized) {
+
+
+                    return FilterResults()
+                }
+
+
                 val filteredList: List<HouseResponse>
 
-                if (constraint.isNullOrEmpty()) {
+                if (constraint.isBlank()) {
                     filteredList = housesList
 
                 } else {
+                    Log.d(TAG, "performFiltering constraint not blank: '$constraint'")
                     val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()
                     filteredList = housesList.filter { house ->
                         house.zip.lowercase(Locale.getDefault())
@@ -154,16 +166,25 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                if (results?.values != null && (results.values as List<HouseResponse>).isNotEmpty()) {
-                    visibleHousesList =
-                        (results.values ?: emptyList<HouseResponse>()) as List<HouseResponse>
-                    notifyDataSetChanged()
-                    this@HouseAdapter.overviewFragment.binding.rlNoData.visibility = View.GONE
-                    this@HouseAdapter.overviewFragment.binding.rvHouses.visibility = View.VISIBLE
+                Log.d(TAG, "publishResults invoked: ${results?.count?:"null"}")
+                if (results?.values != null) {
+                    if ((results.values as List<HouseResponse>).isNotEmpty()) {
+                        visibleHousesList =
+                            (results.values ?: emptyList<HouseResponse>()) as List<HouseResponse>
+                        notifyDataSetChanged()
+                        Log.d(TAG, "if: results values${results?.values}")
+                        Log.d(TAG, "if: visibleHousesList$visibleHousesList")
+                        this@HouseAdapter.overviewFragment.binding.rlNoData.visibility = View.GONE
+                        this@HouseAdapter.overviewFragment.binding.rvHouses.visibility =
+                            View.VISIBLE
 
-                } else {
-                    this@HouseAdapter.overviewFragment.binding.rlNoData.visibility = View.VISIBLE
-                    this@HouseAdapter.overviewFragment.binding.rvHouses.visibility = View.GONE
+                    } else {
+                        Log.d(TAG, "else: results values${results?.values}")
+                        Log.d(TAG, "else: visibleHousesList$visibleHousesList")
+                        this@HouseAdapter.overviewFragment.binding.rlNoData.visibility =
+                            View.VISIBLE
+                        this@HouseAdapter.overviewFragment.binding.rvHouses.visibility = View.GONE
+                    }
                 }
             }
         }

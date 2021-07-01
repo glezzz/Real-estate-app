@@ -89,9 +89,9 @@
                             android:id="@+id/ivBathroomsDetail"
                             android:layout_width="17dp"
                             android:layout_height="17dp"
+                            android:layout_marginEnd="4dp"
                             app:srcCompat="@drawable/ic_bath"
-                            app:tint="@color/medium"
-                            android:layout_marginEnd="4dp"/>
+                            app:tint="@color/medium" />
 
                         <TextView
                             android:id="@+id/tvBathroomsDetail"
@@ -106,9 +106,9 @@
                             android:id="@+id/ivSizeDetail"
                             android:layout_width="17dp"
                             android:layout_height="17dp"
+                            android:layout_marginEnd="4dp"
                             app:srcCompat="@drawable/ic_layers"
-                            app:tint="@color/medium"
-                            android:layout_marginEnd="4dp"/>
+                            app:tint="@color/medium" />
 
                         <TextView
                             android:id="@+id/tvSizeDetail"
@@ -164,7 +164,6 @@
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/gothamssm_bold"
                     android:text="Location"
-
                     android:textColor="@color/strong"
                     android:textSize="16dp" />
 

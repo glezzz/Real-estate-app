@@ -110,6 +110,8 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         // Back icon click listener
         binding.ivBackBtn.setOnClickListener {
             (activity as MainActivity).onBackPressed()
+
+
         }
     }
 
