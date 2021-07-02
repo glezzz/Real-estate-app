@@ -28,7 +28,7 @@
                 android:id="@+id/ivHouse"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/image_of_house"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -134,9 +134,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/gothamssm_medium"
+                    android:textColor="@color/medium"
                     android:textSize="10dp"
-                    tools:text="65"
-                    android:textColor="@color/medium"/>
+                    tools:text="65" />
 
                 <ImageView
                     android:id="@+id/ivDistance"

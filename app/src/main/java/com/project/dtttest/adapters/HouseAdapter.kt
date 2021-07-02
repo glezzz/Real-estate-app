@@ -172,14 +172,14 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
                         visibleHousesList =
                             (results.values ?: emptyList<HouseResponse>()) as List<HouseResponse>
                         notifyDataSetChanged()
-                        Log.d(TAG, "if: results values${results?.values}")
+                        Log.d(TAG, "if: results values${results.values}")
                         Log.d(TAG, "if: visibleHousesList$visibleHousesList")
                         this@HouseAdapter.overviewFragment.binding.rlNoData.visibility = View.GONE
                         this@HouseAdapter.overviewFragment.binding.rvHouses.visibility =
                             View.VISIBLE
 
                     } else {
-                        Log.d(TAG, "else: results values${results?.values}")
+                        Log.d(TAG, "else: results values${results.values}")
                         Log.d(TAG, "else: visibleHousesList$visibleHousesList")
                         this@HouseAdapter.overviewFragment.binding.rlNoData.visibility =
                             View.VISIBLE

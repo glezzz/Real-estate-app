@@ -1,13 +1,9 @@
 package com.project.dtttest.ui.fragments
 
 import android.Manifest
-import android.R.attr.defaultValue
-import android.R.attr.key
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,9 +32,8 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentHouseDetailBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
-    // private lateinit var maps: Maps
 
-    private val args: HouseDetailFragmentArgs by navArgs()
+    val args: HouseDetailFragmentArgs by navArgs()
 
     private lateinit var userCoordinates: DoubleArray
 
@@ -86,10 +81,10 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
                 house.latitude.toDouble(),
                 house.longitude.toDouble()
             ).toString() + " km"
-        // Log.d(TAG, "user latitude: ${userCoordinates[0]}")
-        // Log.d(TAG, "user longitude: ${userCoordinates[1]}")
-        //     Log.d(TAG, "house latitude: ${house.latitude}")
-        //     Log.d(TAG, "house longitude: ${house.longitude}")
+            // Log.d(TAG, "user latitude: ${userCoordinates[0]}")
+            // Log.d(TAG, "user longitude: ${userCoordinates[1]}")
+            //     Log.d(TAG, "house latitude: ${house.latitude}")
+            //     Log.d(TAG, "house longitude: ${house.longitude}")
 
         } else {
             binding.tvDistanceDetail.text = "Need permissions"
@@ -105,20 +100,18 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         )
         Glide.with(this).load(glideUrl).into(binding.ivHouseDetail)
 
-        /* maps.*/initGoogleMap()
+        initGoogleMap()
 
         // Back icon click listener
         binding.ivBackBtn.setOnClickListener {
             (activity as MainActivity).onBackPressed()
-
-
         }
     }
 
     private lateinit var map: GoogleMap
 
     /**
-     * Initializes Google Maps fragment for house location
+     * Initialize Google Maps fragment for house location
      */
     private fun initGoogleMap() {
         val mapFragment = childFragmentManager
@@ -169,13 +162,6 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
             map.isMyLocationEnabled = true
@@ -219,13 +205,6 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return
                 }
                 map.isMyLocationEnabled = true

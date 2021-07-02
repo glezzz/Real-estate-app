@@ -27,6 +27,7 @@
             android:layout_marginTop="30dp"
             android:background="@null"
             android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/ic_back"
             app:tint="@color/white" />
 
@@ -144,7 +145,7 @@
                     android:layout_marginTop="18dp"
                     android:layout_marginBottom="18dp"
                     android:fontFamily="@font/gothamssm_bold"
-                    android:text="Description"
+                    android:text="@string/description"
                     android:textColor="@color/strong"
                     android:textSize="16dp" />
 
@@ -163,7 +164,7 @@
                     android:layout_marginTop="22dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/gothamssm_bold"
-                    android:text="Location"
+                    android:text="@string/location"
                     android:textColor="@color/strong"
                     android:textSize="16dp" />
 

@@ -46,7 +46,7 @@ class OverviewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG,"onViewCreated()")
+        // Log.d(TAG,"onViewCreated()")
 
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
@@ -54,7 +54,7 @@ class OverviewFragment : Fragment() {
 
         viewModel.getHouses()
         viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
-            Log.d(TAG,"myResponse.observe() ${response.isSuccessful}")
+            // Log.d(TAG,"myResponse.observe() ${response.isSuccessful}")
 
             if (response.isSuccessful) {
                 response.body()?.let { houseAdapter.setData(it as ArrayList<HouseResponse>) }
@@ -75,9 +75,9 @@ class OverviewFragment : Fragment() {
             )
         }
         // Search function
-        binding.tietSearch.doOnTextChanged { text, _, _, count ->
+        binding.tietSearch.doOnTextChanged { text, _, _, _ ->
             run {
-                Log.d(TAG, "doOnTextChanged() $text, $count")
+                // Log.d(TAG, "doOnTextChanged() $text, $count")
 
                 houseAdapter.filter.filter(text)
             }
@@ -129,13 +129,6 @@ class OverviewFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         fusedLocationClient.lastLocation
@@ -143,21 +136,21 @@ class OverviewFragment : Fragment() {
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
                     //We have a location
-                    Log.d(TAG, "onSuccess: $location")
-
-                    Log.d(TAG, "onSuccess: " + location.latitude)
+                    // Log.d(TAG, "onSuccess: $location")
+                    //
+                    // Log.d(TAG, "onSuccess: " + location.latitude)
                     userCoordinates.add(location.latitude)
 
-                    Log.d(TAG, "onSuccess: " + location.longitude)
+                    // Log.d(TAG, "onSuccess: " + location.longitude)
                     userCoordinates.add(location.longitude)
 
-                    Log.d(TAG, "onSuccess: " + userCoordinates)
+                    // Log.d(TAG, "onSuccess: " + userCoordinates)
                     houseAdapter.notifyDataSetChanged()
 
-                } else {
+                } /*else {
                     Log.d(TAG, "onSuccess: Location was null...")
 
-                }
+                }*/
             }
         return
     }
@@ -197,9 +190,9 @@ class OverviewFragment : Fragment() {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
-                    Log.d(TAG, "permission granted")
+                // Log.d(TAG, "permission granted")
                 getLastLocation()
-                Log.d(TAG, "get last location done")
+                // Log.d(TAG, "get last location done")
 
 
             } else {

@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">DTT test</string>
+    <string name="perhaps_try_another_search">Perhaps try another search?</string>
+    <string name="no_results_found">No results found!</string>
+    <string name="search_for_a_home">Search for a home</string>
+    <string name="dtt_real_estate">DTT REAL ESTATE</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
+    <string name="about">ABOUT</string>
+    <string name="design_and_development">Design and Development</string>
+    <string name="by_dtt">by DTT</string>
+    <string name="d_tt_nl">d-tt.nl</string>
+    <string name="image_of_house">Image of house</string>
 
-    <!--    <string name="dtt_hyperlink"><a href="http://https://www.d-tt.nl/"/></string>-->
 </resources>

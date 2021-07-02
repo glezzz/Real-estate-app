@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/gothamssm_bold"
-        android:text="ABOUT"
+        android:text="@string/about"
         android:textColor="@color/strong" />
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
         android:fontFamily="@font/gothamssm_bold"
-        android:text="Design and Development"
+        android:text="@string/design_and_development"
         android:textColor="@color/strong"
         android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gothamssm_book"
-                android:text="by DTT"
+                android:text="@string/by_dtt"
                 android:textColor="@color/strong"
                 android:textSize="10dp" />
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:text="d-tt.nl"
+                android:text="@string/d_tt_nl"
                 android:textSize="13dp" />
 
         </LinearLayout>

@@ -4,6 +4,5 @@ class Constants {
 
     companion object {
         const val BASE_URL = "https://intern.docker-dev.d-tt.nl/"
-        const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
 }
