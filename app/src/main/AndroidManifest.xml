@@ -20,7 +20,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.activities.SplashActivity"
             android:theme="@style/SplashTheme"
             android:noHistory="true">
             <intent-filter>
@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.activities.MainActivity" />
     </application>
 
 </manifest>

@@ -23,8 +23,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.project.dtttest.R
 import com.project.dtttest.databinding.FragmentHouseDetailBinding
-import com.project.dtttest.ui.MainActivity
-import com.project.dtttest.ui.MainViewModel
+import com.project.dtttest.ui.activities.MainActivity
+import com.project.dtttest.ui.viewmodels.MainViewModel
 import java.text.DecimalFormat
 
 open class HouseDetailFragment : Fragment(), OnMapReadyCallback {

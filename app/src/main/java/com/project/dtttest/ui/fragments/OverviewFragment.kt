@@ -22,8 +22,8 @@ import com.project.dtttest.R
 import com.project.dtttest.adapters.HouseAdapter
 import com.project.dtttest.databinding.FragmentOverviewBinding
 import com.project.dtttest.model.HouseResponse
-import com.project.dtttest.ui.MainActivity
-import com.project.dtttest.ui.MainViewModel
+import com.project.dtttest.ui.activities.MainActivity
+import com.project.dtttest.ui.viewmodels.MainViewModel
 import com.project.dtttest.ui.fragments.HouseDetailFragment.Companion.LOCATION_REQUEST_CODE
 
 class OverviewFragment : Fragment() {
@@ -52,8 +52,7 @@ class OverviewFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
-        viewModel.getHouses()
-        viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.allHouses.observe(viewLifecycleOwner, Observer { response ->
             // Log.d(TAG,"myResponse.observe() ${response.isSuccessful}")
 
             if (response.isSuccessful) {
@@ -62,6 +61,7 @@ class OverviewFragment : Fragment() {
                 Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
             }
         })
+        viewModel.getHouses()
         // Send house data in bundle to HouseDetailFragment to display the clicked house
         houseAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {

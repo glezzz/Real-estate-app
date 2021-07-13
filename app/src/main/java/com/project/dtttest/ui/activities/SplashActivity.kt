@@ -1,4 +1,4 @@
-package com.project.dtttest.ui
+package com.project.dtttest.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

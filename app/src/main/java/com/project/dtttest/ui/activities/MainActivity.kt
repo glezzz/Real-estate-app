@@ -1,4 +1,4 @@
-package com.project.dtttest.ui
+package com.project.dtttest.ui.activities
 
 import android.os.Bundle
 import android.view.View
@@ -11,6 +11,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.project.dtttest.R
 import com.project.dtttest.databinding.ActivityMainBinding
 import com.project.dtttest.repository.Repository
+import com.project.dtttest.ui.viewmodels.MainViewModel
+import com.project.dtttest.ui.viewmodelfactory.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 

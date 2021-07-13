@@ -1,4 +1,4 @@
-package com.project.dtttest.ui
+package com.project.dtttest.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,12 +10,12 @@ import retrofit2.Response
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    val myResponse: MutableLiveData<Response<List<HouseResponse>>> = MutableLiveData()
+    val allHouses: MutableLiveData<Response<List<HouseResponse>>> = MutableLiveData()
 
     fun getHouses() {
         viewModelScope.launch {
             val response = repository.getHouses()
-            myResponse.value = response
+            allHouses.value = response
         }
     }
 }
