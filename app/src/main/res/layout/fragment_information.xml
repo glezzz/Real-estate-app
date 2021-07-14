@@ -67,7 +67,8 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:text="@string/d_tt_nl"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:textColorLink="#6797ce"/>
 
         </LinearLayout>
 
