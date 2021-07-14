@@ -33,6 +33,8 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
 
+    private lateinit var map: GoogleMap
+
     val args: HouseDetailFragmentArgs by navArgs()
 
     private lateinit var userCoordinates: DoubleArray
@@ -107,8 +109,6 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             (activity as MainActivity).onBackPressed()
         }
     }
-
-    private lateinit var map: GoogleMap
 
     /**
      * Initialize Google Maps fragment for house location

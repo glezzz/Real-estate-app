@@ -3,10 +3,10 @@
     <item
         android:id="@+id/overviewFragment"
         android:icon="@drawable/ic_home"
-        android:title="Houses" />
+        android:title="@string/houses" />
     <item
         android:id="@+id/informationFragment"
         android:icon="@drawable/ic_info"
-        android:title="Information" />
+        android:title="@string/information" />
 
 </menu>

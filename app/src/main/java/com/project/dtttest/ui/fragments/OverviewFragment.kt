@@ -62,10 +62,12 @@ class OverviewFragment : Fragment() {
             }
         })
         viewModel.getHouses()
+
         // Send house data in bundle to HouseDetailFragment to display the clicked house
         houseAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("house", it)
+
                 // Bundle with user location to display in detail fragment
                 putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
             }
@@ -74,6 +76,7 @@ class OverviewFragment : Fragment() {
                 bundle
             )
         }
+
         // Search function
         binding.tietSearch.doOnTextChanged { text, _, _, _ ->
             run {
@@ -94,6 +97,7 @@ class OverviewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // Instantiate Fused Location Provider Client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
     }
