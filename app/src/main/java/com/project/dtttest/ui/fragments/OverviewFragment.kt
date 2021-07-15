@@ -53,6 +53,7 @@ class OverviewFragment : Fragment() {
         setupRecyclerView()
 
         viewModel.allHouses.observe(viewLifecycleOwner, Observer { response ->
+
             // Log.d(TAG,"myResponse.observe() ${response.isSuccessful}")
 
             if (response.isSuccessful) {
@@ -193,6 +194,7 @@ class OverviewFragment : Fragment() {
     ) {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                 // Permission granted
                 // Log.d(TAG, "permission granted")
                 getLastLocation()

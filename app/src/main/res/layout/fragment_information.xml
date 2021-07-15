@@ -24,9 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/gothamssm_book"
-        android:text="Er zijn vele variaties van passages van Lorem Ipsum beschikbaar maar het merendeel heeft te lijden gehad van wijzigingen in een of andere vorm, door ingevoegde humor of willekeurig gekozen woorden die nog niet half geloofwaardig ogen. Als u een passage uit Lorum Ipsum gaat gebruiken dient u zich ervan te verzekeren dat er niets beschamends midden in de tekst verborgen zit. Alle Lorum Ipsum generators op Internet hebben de eigenschap voorgedefinieerde stukken te herhalen waar nodig zodat dit de eerste echte generator is op internet. Het gebruikt een woordenlijst van 200 latijnse woorden gecombineerd met een handvol zinsstructuur modellen om een Lorum Ipsum te genereren die redelijk overkomt. De gegenereerde Lorum Ipsum is daardoor altijd vrij van herhaling, ingevoegde humor of ongebruikelijke woorden etc."
+        android:text="@string/er_zijn_vele_variaties_van_passages_van_lorem_ipsum_beschikbaar_maar_het_merendeel_heeft_te_lijden_gehad_van_wijzigingen_in_een_of_andere_vorm_door_ingevoegde_humor_of_willekeurig_gekozen_woorden_die_nog_niet_half_geloofwaardig_ogen_als_u_een_passage_uit_lorum_ipsum_gaat_gebruiken_dient_u_zich_ervan_te_verzekeren_dat_er_niets_beschamends_midden_in_de_tekst_verborgen_zit_alle_lorum_ipsum_generators_op_internet_hebben_de_eigenschap_voorgedefinieerde_stukken_te_herhalen_waar_nodig_zodat_dit_de_eerste_echte_generator_is_op_internet_het_gebruikt_een_woordenlijst_van_200_latijnse_woorden_gecombineerd_met_een_handvol_zinsstructuur_modellen_om_een_lorum_ipsum_te_genereren_die_redelijk_overkomt_de_gegenereerde_lorum_ipsum_is_daardoor_altijd_vrij_van_herhaling_ingevoegde_humor_of_ongebruikelijke_woorden_etc"
         android:textColor="@color/medium"
-        android:textSize="12dp" />
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:fontFamily="@font/gothamssm_book"
                 android:text="@string/by_dtt"
                 android:textColor="@color/strong"
-                android:textSize="10dp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                 android:autoLink="web"
                 android:text="@string/d_tt_nl"
                 android:textColorLink="#6797ce"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 

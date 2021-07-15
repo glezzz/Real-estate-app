@@ -16,7 +16,7 @@
         android:fontFamily="@font/gothamssm_bold"
         android:text="@string/dtt_real_estate"
         android:textColor="@color/strong"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -27,15 +27,16 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="14dp"
         android:focusableInTouchMode="true"
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:boxBackgroundColor="@color/dark_gray"
         app:boxCornerRadiusBottomEnd="13dp"
         app:boxCornerRadiusBottomStart="13dp"
         app:boxCornerRadiusTopEnd="13dp"
         app:boxCornerRadiusTopStart="13dp"
         app:boxStrokeWidth="0dp"
+        app:endIconDrawable="@drawable/ic_close"
         app:endIconMode="clear_text"
-        app:endIconTint="@color/medium"
+        app:endIconTint="@color/strong"
         app:hintEnabled="false"
         app:layout_constraintTop_toBottomOf="@id/tvDttRealEstate"
         app:startIconDrawable="@drawable/ic_search"
@@ -82,14 +83,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/gothamssm_xlight"
             android:text="@string/no_results_found"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gothamssm_xlight"
             android:text="@string/perhaps_try_another_search"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -25,12 +25,16 @@ import com.project.dtttest.R
 import com.project.dtttest.databinding.FragmentHouseDetailBinding
 import com.project.dtttest.ui.activities.MainActivity
 import com.project.dtttest.ui.viewmodels.MainViewModel
+import com.project.dtttest.utils.Constants.Companion.ACCESS_KEY
+import com.project.dtttest.utils.Constants.Companion.IMAGE_LOADING_URL
+import com.project.dtttest.utils.calculateDistance
+import com.project.dtttest.utils.loadHouseImage
 import java.text.DecimalFormat
 
 open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentHouseDetailBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
 
     private lateinit var map: GoogleMap
@@ -75,6 +79,7 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         binding.tvBedroomsDetail.text = house.bedrooms.toString()
         binding.tvBathroomsDetail.text = house.bathrooms.toString()
         binding.tvSizeDetail.text = house.size.toString()
+
         // Calculate distance between user location and house
         if (userCoordinates.isNotEmpty()) {
             binding.tvDistanceDetail.text = calculateDistance(
@@ -83,6 +88,7 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
                 house.latitude.toDouble(),
                 house.longitude.toDouble()
             ).toString() + " km"
+
             // Log.d(TAG, "user latitude: ${userCoordinates[0]}")
             // Log.d(TAG, "user longitude: ${userCoordinates[1]}")
             //     Log.d(TAG, "house latitude: ${house.latitude}")
@@ -92,15 +98,8 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             binding.tvDistanceDetail.text = "Need permissions"
         }
 
-        val url: String =
-            "https://intern.docker-dev.d-tt.nl" + house.image
-        val glideUrl = GlideUrl(
-            url,
-            LazyHeaders.Builder()
-                .addHeader("Access-Key", "98bww4ezuzfePCYFxJEWyszbUXc7dxRx")
-                .build()
-        )
-        Glide.with(this).load(glideUrl).into(binding.ivHouseDetail)
+        // Load house image
+        Glide.with(this).load(loadHouseImage(house.image)).into(binding.ivHouseDetail)
 
         initGoogleMap()
 
@@ -218,23 +217,5 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             else -> {
             }
         }
-    }
-
-    /**
-     * Calculates distance between user location and house coordinates
-     */
-    private fun calculateDistance(
-        latOwnLocation: Double,
-        lonOwnLocation: Double,
-        latHouseLocation: Double,
-        lonHouseLocation: Double
-    ): Float {
-        val distance = FloatArray(2)
-        Location.distanceBetween(
-            latOwnLocation, lonOwnLocation,
-            latHouseLocation, lonHouseLocation, distance
-        )
-
-        return DecimalFormat("#.#").format(distance[0] / 1000).toFloat()
     }
 }

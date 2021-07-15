@@ -14,6 +14,9 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.fragments.OverviewFragment
+import com.project.dtttest.utils.calculateDistance
+import com.project.dtttest.utils.formatPrice
+import com.project.dtttest.utils.loadHouseImage
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -58,15 +61,15 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
     override fun onBindViewHolder(holder: HouseAdapter.HouseViewHolder, position: Int) {
         val house = getItem(position)
         holder.binding.apply {
-            // Format price number
-            val formattedPrice = DecimalFormat("#,###").format(house.price)
 
-            tvPrice.text = "$" + formattedPrice
+            tvPrice.text = "$" + formatPrice(house.price)
             tvZipcode.text = house.zip.filter { !it.isWhitespace() }
             tvCity.text = house.city
             tvBedrooms.text = house.bedrooms.toString()
             tvBathrooms.text = house.bathrooms.toString()
             tvSize.text = house.size.toString()
+
+            //TODO: FIX COORDINATES IN VIEWMODEL
 
             // Calculate distance between house & user location
             if (userCoordinates.isNotEmpty()) {
@@ -80,16 +83,10 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
             } else {
                 tvDistance.text = "Need Permissions"
             }
-            // Image binding
-            val url: String =
-                "https://intern.docker-dev.d-tt.nl" + house.image
-            val glideUrl = GlideUrl(
-                url,
-                LazyHeaders.Builder()
-                    .addHeader("Access-Key", "98bww4ezuzfePCYFxJEWyszbUXc7dxRx")
-                    .build()
-            )
-            Glide.with(root).load(glideUrl).into(ivHouse)
+
+            // Load house image
+            Glide.with(root).load(loadHouseImage(house.image)).into(ivHouse)
+
             // Card click listener
             root.setOnClickListener {
                 onItemClickListener?.let { it(house) }
@@ -115,34 +112,14 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
         onItemClickListener = listener
     }
 
-    /**
-     * Calculates distance between user location and house coordinates
-     */
-    private fun calculateDistance(
-        latOwnLocation: Double,
-        lonOwnLocation: Double,
-        latHouseLocation: Double,
-        lonHouseLocation: Double
-    ): Float {
-        val distance = FloatArray(2)
-        Location.distanceBetween(
-            latOwnLocation, lonOwnLocation,
-            latHouseLocation, lonHouseLocation, distance
-        )
-
-        return DecimalFormat("#.#").format(distance[0] / 1000).toFloat()
-    }
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): FilterResults {
                 Log.d(TAG, "performFiltering invoked: '$constraint', ${housesList.size}")
                 if (!housesListInitialized) {
 
-
                     return FilterResults()
                 }
-
 
                 val filteredList: List<HouseResponse>
 
@@ -166,7 +143,7 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                Log.d(TAG, "publishResults invoked: ${results?.count?:"null"}")
+                Log.d(TAG, "publishResults invoked: ${results?.count ?: "null"}")
                 if (results?.values != null) {
                     if ((results.values as List<HouseResponse>).isNotEmpty()) {
                         visibleHousesList =
