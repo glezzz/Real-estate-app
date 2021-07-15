@@ -24,11 +24,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
-        //Hide Bottom Navigation View in HouseDetailFragment
+        binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
+
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+
+        hideBottomNavView(binding)
+        hideStatusBar()
+    }
+
+    /**
+     * Hide Bottom Navigation View in houseDetailFragment
+     */
+    private fun hideBottomNavView(binding: ActivityMainBinding) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.houseDetailFragment -> binding.bottomNavView.visibility = View.GONE
@@ -36,14 +50,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.informationFragment -> binding.bottomNavView.visibility = View.VISIBLE
             }
         }
+    }
 
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-
-        binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
-
-        // Hide status bar
+    private fun hideStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
         } else {

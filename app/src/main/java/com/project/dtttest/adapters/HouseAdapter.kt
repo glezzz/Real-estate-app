@@ -1,7 +1,5 @@
 package com.project.dtttest.adapters
 
-import android.location.Location
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +7,12 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.fragments.OverviewFragment
 import com.project.dtttest.utils.calculateDistance
 import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
-import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,10 +23,8 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
     private var housesListInitialized = false
     private var visibleHousesList = emptyList<HouseResponse>()
 
-    private val TAG = "publishResults else"
-
-    inner class HouseViewHolder(val binding: ItemHouseBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    // Card click listener
+    private var onItemClickListener: ((HouseResponse) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -54,20 +47,12 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
         return visibleHousesList[position]
     }
 
-    // Card click listener
-    private var onItemClickListener: ((HouseResponse) -> Unit)? = null
-
     private var userCoordinates = overviewFragment.userCoordinates
     override fun onBindViewHolder(holder: HouseAdapter.HouseViewHolder, position: Int) {
         val house = getItem(position)
-        holder.binding.apply {
+        holder.bind(house)
 
-            tvPrice.text = "$" + formatPrice(house.price)
-            tvZipcode.text = house.zip.filter { !it.isWhitespace() }
-            tvCity.text = house.city
-            tvBedrooms.text = house.bedrooms.toString()
-            tvBathrooms.text = house.bathrooms.toString()
-            tvSize.text = house.size.toString()
+        holder.binding.apply {
 
             //TODO: FIX COORDINATES IN VIEWMODEL
 
@@ -84,13 +69,26 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
                 tvDistance.text = "Need Permissions"
             }
 
-            // Load house image
-            Glide.with(root).load(loadHouseImage(house.image)).into(ivHouse)
-
             // Card click listener
             root.setOnClickListener {
                 onItemClickListener?.let { it(house) }
             }
+        }
+    }
+
+    class HouseViewHolder(val binding: ItemHouseBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(house: HouseResponse) {
+            binding.tvPrice.text = "$" + formatPrice(house.price)
+            binding.tvZipcode.text = house.zip.filter { !it.isWhitespace() }
+            binding.tvCity.text = house.city
+            binding.tvBedrooms.text = house.bedrooms.toString()
+            binding.tvBathrooms.text = house.bathrooms.toString()
+            binding.tvSize.text = house.size.toString()
+
+            // Load house image
+            Glide.with(binding.root).load(loadHouseImage(house.image)).into(binding.ivHouse)
         }
     }
 
@@ -115,7 +113,6 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): FilterResults {
-                Log.d(TAG, "performFiltering invoked: '$constraint', ${housesList.size}")
                 if (!housesListInitialized) {
 
                     return FilterResults()
@@ -127,7 +124,6 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
                     filteredList = housesList
 
                 } else {
-                    Log.d(TAG, "performFiltering constraint not blank: '$constraint'")
                     val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()
                     filteredList = housesList.filter { house ->
                         house.zip.lowercase(Locale.getDefault())
@@ -143,21 +139,16 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                Log.d(TAG, "publishResults invoked: ${results?.count ?: "null"}")
                 if (results?.values != null) {
                     if ((results.values as List<HouseResponse>).isNotEmpty()) {
                         visibleHousesList =
                             (results.values ?: emptyList<HouseResponse>()) as List<HouseResponse>
                         notifyDataSetChanged()
-                        Log.d(TAG, "if: results values${results.values}")
-                        Log.d(TAG, "if: visibleHousesList$visibleHousesList")
                         this@HouseAdapter.overviewFragment.binding.rlNoData.visibility = View.GONE
                         this@HouseAdapter.overviewFragment.binding.rvHouses.visibility =
                             View.VISIBLE
 
                     } else {
-                        Log.d(TAG, "else: results values${results.values}")
-                        Log.d(TAG, "else: visibleHousesList$visibleHousesList")
                         this@HouseAdapter.overviewFragment.binding.rlNoData.visibility =
                             View.VISIBLE
                         this@HouseAdapter.overviewFragment.binding.rvHouses.visibility = View.GONE

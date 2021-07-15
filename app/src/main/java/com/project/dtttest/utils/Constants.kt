@@ -8,5 +8,7 @@ class Constants {
         const val IMAGE_LOADING_URL = "https://intern.docker-dev.d-tt.nl"
 
         const val ACCESS_KEY = "98bww4ezuzfePCYFxJEWyszbUXc7dxRx"
+
+        const val LOCATION_REQUEST_CODE = 0
     }
 }

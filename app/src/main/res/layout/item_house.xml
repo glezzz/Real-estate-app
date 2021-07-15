@@ -38,7 +38,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:orientation="vertical"
             android:padding="3dp">
 
@@ -124,9 +124,9 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="3dp"
                     app:srcCompat="@drawable/ic_layers"
-                    app:tint="@color/medium"
-                    android:layout_marginBottom="3dp"/>
+                    app:tint="@color/medium" />
 
                 <TextView
                     android:id="@+id/tvSize"
@@ -154,7 +154,7 @@
                     android:fontFamily="@font/gothamssm_medium"
                     android:textColor="@color/medium"
                     android:textSize="10sp"
-                    tools:text="58.9" />
+                    tools:text="58.9 km" />
 
             </LinearLayout>
 

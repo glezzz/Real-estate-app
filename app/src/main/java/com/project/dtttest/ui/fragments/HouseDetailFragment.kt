@@ -2,7 +2,6 @@ package com.project.dtttest.ui.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,31 +20,25 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.project.dtttest.R
 import com.project.dtttest.databinding.FragmentHouseDetailBinding
+import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.activities.MainActivity
 import com.project.dtttest.ui.viewmodels.MainViewModel
-import com.project.dtttest.utils.Constants.Companion.ACCESS_KEY
-import com.project.dtttest.utils.Constants.Companion.IMAGE_LOADING_URL
+import com.project.dtttest.utils.Constants.Companion.LOCATION_REQUEST_CODE
 import com.project.dtttest.utils.calculateDistance
+import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
-import java.text.DecimalFormat
 
 open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentHouseDetailBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
+
+    private val args: HouseDetailFragmentArgs by navArgs()
 
     private lateinit var map: GoogleMap
 
-    val args: HouseDetailFragmentArgs by navArgs()
-
     private lateinit var userCoordinates: DoubleArray
-
-    private val TAG = "My coordinates"
-
-    companion object {
-        const val LOCATION_REQUEST_CODE = 0
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,14 +59,28 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val house = args.house
         viewModel = (activity as MainActivity).viewModel
 
+        val house = args.house
+        bindViews(house)
+
+        // Load house image
+        Glide.with(this).load(loadHouseImage(house.image)).into(binding.ivHouseDetail)
+
+        initGoogleMap()
+
+        // Back icon click listener
+        binding.ivBackBtn.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
+    }
+
+    /**
+     * Bind views in HouseDetailFragment
+     */
+    private fun bindViews(house: HouseResponse) {
         binding.tvDescription.text = house.description
-
-        val formattedPrice = DecimalFormat("#,###").format(house.price)
-        binding.tvPriceDetail.text = "$" + formattedPrice
-
+        binding.tvPriceDetail.text = "$" + formatPrice(house.price)
         binding.tvBedroomsDetail.text = house.bedrooms.toString()
         binding.tvBathroomsDetail.text = house.bathrooms.toString()
         binding.tvSizeDetail.text = house.size.toString()
@@ -89,23 +94,8 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
                 house.longitude.toDouble()
             ).toString() + " km"
 
-            // Log.d(TAG, "user latitude: ${userCoordinates[0]}")
-            // Log.d(TAG, "user longitude: ${userCoordinates[1]}")
-            //     Log.d(TAG, "house latitude: ${house.latitude}")
-            //     Log.d(TAG, "house longitude: ${house.longitude}")
-
         } else {
             binding.tvDistanceDetail.text = "Need permissions"
-        }
-
-        // Load house image
-        Glide.with(this).load(loadHouseImage(house.image)).into(binding.ivHouseDetail)
-
-        initGoogleMap()
-
-        // Back icon click listener
-        binding.ivBackBtn.setOnClickListener {
-            (activity as MainActivity).onBackPressed()
         }
     }
 

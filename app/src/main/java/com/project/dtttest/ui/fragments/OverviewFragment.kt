@@ -24,7 +24,7 @@ import com.project.dtttest.databinding.FragmentOverviewBinding
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.activities.MainActivity
 import com.project.dtttest.ui.viewmodels.MainViewModel
-import com.project.dtttest.ui.fragments.HouseDetailFragment.Companion.LOCATION_REQUEST_CODE
+import com.project.dtttest.utils.Constants.Companion.LOCATION_REQUEST_CODE
 
 class OverviewFragment : Fragment() {
 
@@ -46,15 +46,12 @@ class OverviewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Log.d(TAG,"onViewCreated()")
 
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
         viewModel.allHouses.observe(viewLifecycleOwner, Observer { response ->
-
-            // Log.d(TAG,"myResponse.observe() ${response.isSuccessful}")
 
             if (response.isSuccessful) {
                 response.body()?.let { houseAdapter.setData(it as ArrayList<HouseResponse>) }
@@ -121,7 +118,7 @@ class OverviewFragment : Fragment() {
 
     /**
      * Request last known location of user's device,
-     * which is usually equivalent to the known location of device.
+     * which is usually equivalent to the current location of device.
      */
     var userCoordinates = ArrayList<Double>()
     private fun getLastLocation() {
