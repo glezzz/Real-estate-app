@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.fragments.OverviewFragment
+import com.project.dtttest.utils.Constants.Companion.currency
 import com.project.dtttest.utils.calculateDistance
 import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
@@ -80,7 +81,7 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(house: HouseResponse) {
-            binding.tvPrice.text = "$" + formatPrice(house.price)
+            binding.tvPrice.text = currency + formatPrice(house.price)
             binding.tvZipcode.text = house.zip.filter { !it.isWhitespace() }
             binding.tvCity.text = house.city
             binding.tvBedrooms.text = house.bedrooms.toString()
@@ -110,6 +111,9 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
         onItemClickListener = listener
     }
 
+    /**
+     * Search through the list of houses via zipcode or city.
+     */
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): FilterResults {

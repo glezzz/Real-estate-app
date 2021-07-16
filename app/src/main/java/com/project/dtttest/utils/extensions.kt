@@ -8,8 +8,9 @@ import java.text.DecimalFormat
 /**
  * Format price number
  */
+const val pricePattern = "#,###"
 fun formatPrice(housePrice: Int): String? {
-    return DecimalFormat("#,###").format(housePrice)
+    return DecimalFormat(pricePattern).format(housePrice)
 }
 
 /**

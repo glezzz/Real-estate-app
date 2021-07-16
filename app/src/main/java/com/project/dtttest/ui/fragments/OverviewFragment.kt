@@ -35,8 +35,6 @@ class OverviewFragment : Fragment() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private val TAG = "My coordinates"
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,10 +73,9 @@ class OverviewFragment : Fragment() {
             )
         }
 
-        // Search function
+        // Listen to text changes in search bar & perform filtering
         binding.tietSearch.doOnTextChanged { text, _, _, _ ->
             run {
-                // Log.d(TAG, "doOnTextChanged() $text, $count")
 
                 houseAdapter.filter.filter(text)
             }
@@ -168,7 +165,6 @@ class OverviewFragment : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                Log.d(TAG, "askLocationPermission: you should show an alert dialog...")
                 ActivityCompat.requestPermissions(
                     requireActivity(),
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),

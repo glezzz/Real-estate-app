@@ -10,5 +10,7 @@ class Constants {
         const val ACCESS_KEY = "98bww4ezuzfePCYFxJEWyszbUXc7dxRx"
 
         const val LOCATION_REQUEST_CODE = 0
+
+        const val currency = "$"
     }
 }
