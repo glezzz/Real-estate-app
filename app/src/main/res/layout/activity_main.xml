@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/flFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -24,12 +24,12 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph" />
 
-    </FrameLayout>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavView"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:elevation="16dp"
         app:labelVisibilityMode="unlabeled"

@@ -8,9 +8,17 @@ import java.text.DecimalFormat
 /**
  * Format price number
  */
-const val pricePattern = "#,###"
+const val pricePattern = "\$###,###.###"
 fun formatPrice(housePrice: Int): String? {
     return DecimalFormat(pricePattern).format(housePrice)
+}
+/**
+ * Format distance
+ */
+const val distancePattern = "###.# km"
+fun formatDistance(distance: Float): String {
+    val formattedDistance = distance / 1000
+    return DecimalFormat(distancePattern).format(formattedDistance)
 }
 
 /**
@@ -27,7 +35,7 @@ fun calculateDistance(
         latOwnLocation, lonOwnLocation,
         latHouseLocation, lonHouseLocation, distance
     )
-    return DecimalFormat("#.#").format(distance[0] / 1000).toFloat()
+    return distance[0]
 }
 
 /**

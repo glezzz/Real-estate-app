@@ -80,6 +80,7 @@ class OverviewFragment : Fragment() {
                 houseAdapter.filter.filter(text)
             }
         }
+
     }
 
     private fun setupRecyclerView() {

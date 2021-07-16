@@ -11,6 +11,6 @@ class Constants {
 
         const val LOCATION_REQUEST_CODE = 0
 
-        const val currency = "$"
+        const val GPS_REQUEST = 101
     }
 }

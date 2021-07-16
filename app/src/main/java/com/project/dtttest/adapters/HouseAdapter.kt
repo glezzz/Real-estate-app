@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.fragments.OverviewFragment
-import com.project.dtttest.utils.Constants.Companion.currency
 import com.project.dtttest.utils.calculateDistance
+import com.project.dtttest.utils.formatDistance
 import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
 import java.util.*
@@ -59,12 +59,12 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
 
             // Calculate distance between house & user location
             if (userCoordinates.isNotEmpty()) {
-                tvDistance.text = calculateDistance(
+                tvDistance.text = formatDistance(calculateDistance(
                     userCoordinates[userCoordinates.lastIndex - 1],
                     userCoordinates[userCoordinates.lastIndex],
                     house.latitude.toDouble(),
                     house.longitude.toDouble()
-                ).toString() + " km"
+                ))
 
             } else {
                 tvDistance.text = "Need Permissions"
@@ -81,7 +81,7 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(house: HouseResponse) {
-            binding.tvPrice.text = currency + formatPrice(house.price)
+            binding.tvPrice.text = formatPrice(house.price)
             binding.tvZipcode.text = house.zip.filter { !it.isWhitespace() }
             binding.tvCity.text = house.city
             binding.tvBedrooms.text = house.bedrooms.toString()

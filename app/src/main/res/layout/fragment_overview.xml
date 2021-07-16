@@ -34,6 +34,7 @@
         app:boxCornerRadiusTopEnd="13dp"
         app:boxCornerRadiusTopStart="13dp"
         app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:endIconDrawable="@drawable/ic_close"
         app:endIconMode="clear_text"
         app:endIconTint="@color/strong"
@@ -48,7 +49,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/search_for_a_home"
             android:lines="1"
-            android:textColor="@color/medium"
+            android:textColor="@color/strong"
             android:textColorHint="@color/medium" />
 
     </com.google.android.material.textfield.TextInputLayout>

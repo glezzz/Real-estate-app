@@ -24,8 +24,8 @@ import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.activities.MainActivity
 import com.project.dtttest.ui.viewmodels.MainViewModel
 import com.project.dtttest.utils.Constants.Companion.LOCATION_REQUEST_CODE
-import com.project.dtttest.utils.Constants.Companion.currency
 import com.project.dtttest.utils.calculateDistance
+import com.project.dtttest.utils.formatDistance
 import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
 
@@ -81,19 +81,19 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
      */
     private fun bindViews(house: HouseResponse) {
         binding.tvDescription.text = house.description
-        binding.tvPriceDetail.text = currency + formatPrice(house.price)
+        binding.tvPriceDetail.text = formatPrice(house.price)
         binding.tvBedroomsDetail.text = house.bedrooms.toString()
         binding.tvBathroomsDetail.text = house.bathrooms.toString()
         binding.tvSizeDetail.text = house.size.toString()
 
         // Calculate distance between user location and house
         if (userCoordinates.isNotEmpty()) {
-            binding.tvDistanceDetail.text = calculateDistance(
+            binding.tvDistanceDetail.text = formatDistance(calculateDistance(
                 userCoordinates[userCoordinates.lastIndex - 1],
                 userCoordinates[userCoordinates.lastIndex],
                 house.latitude.toDouble(),
                 house.longitude.toDouble()
-            ).toString() + " km"
+            ))
 
         } else {
             binding.tvDistanceDetail.text = "Need permissions"
