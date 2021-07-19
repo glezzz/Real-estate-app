@@ -1,8 +1,11 @@
 package com.project.dtttest.ui.fragments
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,7 +33,8 @@ import com.project.dtttest.utils.formatDistance
 import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
 
-open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
+
+class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentHouseDetailBinding? = null
     private val binding get() = _binding!!
@@ -38,6 +43,8 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
     private val args: HouseDetailFragmentArgs by navArgs()
 
     private lateinit var map: GoogleMap
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var userCoordinates: DoubleArray
 
@@ -88,12 +95,14 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
 
         // Calculate distance between user location and house
         if (userCoordinates.isNotEmpty()) {
-            binding.tvDistanceDetail.text = formatDistance(calculateDistance(
-                userCoordinates[userCoordinates.lastIndex - 1],
-                userCoordinates[userCoordinates.lastIndex],
-                house.latitude.toDouble(),
-                house.longitude.toDouble()
-            ))
+            binding.tvDistanceDetail.text = formatDistance(
+                calculateDistance(
+                    userCoordinates[userCoordinates.lastIndex - 1],
+                    userCoordinates[userCoordinates.lastIndex],
+                    house.latitude.toDouble(),
+                    house.longitude.toDouble()
+                )
+            )
 
         } else {
             binding.tvDistanceDetail.text = "Need permissions"
@@ -113,6 +122,12 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         map = googleMap
         createMarker()
         enableUserLocation()
+        map.setOnMapClickListener {
+            Log.d("OnMapClick", "Invoked: ")
+
+            val house = args.house
+            onMapClickRedirectToGoogleMaps(house.latitude.toDouble(), house.longitude.toDouble())
+        }
         //getLocation()
     }
 
@@ -128,6 +143,14 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             1,
             null
         )
+    }
+
+    private fun onMapClickRedirectToGoogleMaps(houseLatitude: Double, houseLongitude: Double) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://maps.google.com/maps?&daddr=$houseLatitude, $houseLongitude")
+        )
+        startActivity(intent)
     }
 
     /**
@@ -209,4 +232,12 @@ open class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
+
+    // override fun onMapClick(p0: LatLng) {
+    //     Log.d("OnMapClick", "Invoked: ")
+    //     val uri: String =
+    //         java.lang.String.format(Locale.ENGLISH, "geo:%f,%f", p0.latitude, p0.longitude)
+    //     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+    //     requireContext().startActivity(intent)
+    // }
 }
