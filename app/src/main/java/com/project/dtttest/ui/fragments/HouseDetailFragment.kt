@@ -105,7 +105,8 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             )
 
         } else {
-            binding.tvDistanceDetail.text = "Need permissions"
+            binding.tvDistanceDetail.text = getString(R.string.no_permissions)
+            binding.tvDistanceDetail.textSize = 10.0F
         }
     }
 

@@ -7,6 +7,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.project.dtttest.R
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.fragments.OverviewFragment
@@ -49,7 +50,7 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
     }
 
     private var userCoordinates = overviewFragment.userCoordinates
-    override fun onBindViewHolder(holder: HouseAdapter.HouseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
         val house = getItem(position)
         holder.bind(house)
 
@@ -67,7 +68,8 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
                 ))
 
             } else {
-                tvDistance.text = "Need Permissions"
+                tvDistance.text = holder.itemView.context.getString(R.string.no_permissions)
+                tvDistance.textSize = 8.0F
             }
 
             // Card click listener
