@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gothamssm_bold"
                         android:textColor="@color/strong"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/title_02_03"
                         tools:text="$45,000" />
 
                     <LinearLayout
@@ -85,7 +85,7 @@
                             android:fontFamily="@font/gothamssm_medium"
                             android:gravity="center_vertical"
                             android:textColor="@color/medium"
-                            android:textSize="12sp"
+                            android:textSize="@dimen/body_input_hint_detail"
                             tools:text="1" />
 
                         <ImageView
@@ -104,7 +104,7 @@
                             android:fontFamily="@font/gothamssm_medium"
                             android:gravity="center_vertical"
                             android:textColor="@color/medium"
-                            android:textSize="12sp"
+                            android:textSize="@dimen/body_input_hint_detail"
                             tools:text="1" />
 
                         <ImageView
@@ -123,7 +123,7 @@
                             android:fontFamily="@font/gothamssm_medium"
                             android:gravity="center_vertical"
                             android:textColor="@color/medium"
-                            android:textSize="12sp"
+                            android:textSize="@dimen/body_input_hint_detail"
                             tools:text="46" />
 
                         <ImageView
@@ -141,8 +141,8 @@
                             android:fontFamily="@font/gothamssm_medium"
                             android:gravity="center"
                             android:textColor="@color/medium"
-                            android:textSize="10sp"
-                            tools:text="No Permissions" />
+                            android:textSize="@dimen/body_input_hint_detail"
+                            tools:text="54.2 km" />
 
                     </LinearLayout>
 
@@ -156,7 +156,7 @@
                     android:fontFamily="@font/gothamssm_bold"
                     android:text="@string/description"
                     android:textColor="@color/strong"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/title_02_03" />
 
                 <TextView
                     android:id="@+id/tvDescription"
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gothamssm_book"
                     android:textColor="@color/medium"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/body_input_hint_detail"
                     tools:text="Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten." />
 
                 <TextView
@@ -176,7 +176,7 @@
                     android:fontFamily="@font/gothamssm_bold"
                     android:text="@string/location"
                     android:textColor="@color/strong"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/title_02_03" />
 
                 <fragment
                     android:id="@+id/frMap"

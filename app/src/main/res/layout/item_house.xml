@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gothamssm_bold"
                 android:textColor="@color/strong"
-                android:textSize="16sp"
+                android:textSize="@dimen/title_02_03"
                 tools:text="Price" />
 
             <LinearLayout
@@ -64,7 +64,7 @@
                     android:layout_marginEnd="3dp"
                     android:fontFamily="@font/gothamssm_medium"
                     android:textColor="@color/medium"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/body_input_hint_detail"
                     tools:text="Zipcode" />
 
                 <TextView
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gothamssm_medium"
                     android:textColor="@color/medium"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/body_input_hint_detail"
                     tools:text="City" />
 
             </LinearLayout>
@@ -85,9 +85,9 @@
 
                 <ImageView
                     android:id="@+id/ivBedrooms"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_width="@dimen/item_icon_width"
+                    android:layout_height="@dimen/item_icon_height"
+                    android:layout_marginEnd="@dimen/item_icon_layout_margin_end"
                     app:srcCompat="@drawable/ic_bed"
                     app:tint="@color/medium" />
 
@@ -95,17 +95,17 @@
                     android:id="@+id/tvBedrooms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/item_tv_layout_margin_end"
                     android:fontFamily="@font/gothamssm_medium"
                     android:textColor="@color/medium"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/subtitle"
                     tools:text="2" />
 
                 <ImageView
                     android:id="@+id/ivBathrooms"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_width="@dimen/item_icon_width"
+                    android:layout_height="@dimen/item_icon_height"
+                    android:layout_marginEnd="@dimen/item_icon_layout_margin_end"
                     app:srcCompat="@drawable/ic_bath"
                     app:tint="@color/medium" />
 
@@ -113,16 +113,16 @@
                     android:id="@+id/tvBathrooms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/item_tv_layout_margin_end"
                     android:fontFamily="@font/gothamssm_medium"
                     android:textColor="@color/medium"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/subtitle"
                     tools:text="3" />
 
                 <ImageView
                     android:id="@+id/ivSize"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="@dimen/item_icon_width"
+                    android:layout_height="@dimen/item_icon_height"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="3dp"
                     app:srcCompat="@drawable/ic_layers"
@@ -132,16 +132,16 @@
                     android:id="@+id/tvSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/item_tv_layout_margin_end"
                     android:fontFamily="@font/gothamssm_medium"
                     android:textColor="@color/medium"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/subtitle"
                     tools:text="65" />
 
                 <ImageView
                     android:id="@+id/ivDistance"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="@dimen/item_icon_width"
+                    android:layout_height="@dimen/item_icon_height"
                     android:layout_marginEnd="4dp"
                     android:textColor="@color/medium"
                     app:srcCompat="@drawable/ic_location"
@@ -151,10 +151,10 @@
                     android:id="@+id/tvDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/gothamssm_medium"
                     android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/gothamssm_medium"
                     android:textColor="@color/medium"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/subtitle"
                     tools:text="58.9 km" />
 
             </LinearLayout>
