@@ -10,15 +10,14 @@ import com.bumptech.glide.Glide
 import com.project.dtttest.R
 import com.project.dtttest.databinding.ItemHouseBinding
 import com.project.dtttest.model.HouseResponse
-import com.project.dtttest.ui.fragments.OverviewFragment
-import com.project.dtttest.utils.calculateDistance
+import com.project.dtttest.ui.fragments.HousesOverviewFragment
 import com.project.dtttest.utils.formatDistance
 import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HouseAdapter(private val overviewFragment: OverviewFragment) :
+class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
     RecyclerView.Adapter<HouseAdapter.HouseViewHolder>(), Filterable {
 
     private var housesList = emptyList<HouseResponse>()
@@ -49,27 +48,19 @@ class HouseAdapter(private val overviewFragment: OverviewFragment) :
         return visibleHousesList[position]
     }
 
-    private var userCoordinates = overviewFragment.userCoordinates
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
         val house = getItem(position)
         holder.bind(house)
 
         holder.binding.apply {
 
-            //TODO: FIX COORDINATES IN VIEWMODEL
-
-            // Calculate distance between house & user location
-            if (userCoordinates.isNotEmpty()) {
-                tvDistance.text = formatDistance(calculateDistance(
-                    userCoordinates[userCoordinates.lastIndex - 1],
-                    userCoordinates[userCoordinates.lastIndex],
-                    house.latitude.toDouble(),
-                    house.longitude.toDouble()
-                ))
+            if (house.distance != null) {
+                tvDistance.text = formatDistance(house.distance!!)
+                tvDistance.textSize = 10.0F // SP
 
             } else {
                 tvDistance.text = holder.itemView.context.getString(R.string.no_permissions)
-                tvDistance.textSize = 8.0F
+                tvDistance.textSize = 8.0F // SP
             }
 
             // Card click listener

@@ -21,9 +21,9 @@
         tools:layout="@layout/fragment_information" />
     <fragment
         android:id="@+id/overviewFragment"
-        android:name="com.project.dtttest.ui.fragments.OverviewFragment"
+        android:name="com.project.dtttest.ui.fragments.HousesOverviewFragment"
         android:label="fragment_overview"
-        tools:layout="@layout/fragment_overview">
+        tools:layout="@layout/fragment_houses_overview">
         <action
             android:id="@+id/action_overviewFragment_to_houseDetailFragment"
             app:destination="@id/houseDetailFragment" />

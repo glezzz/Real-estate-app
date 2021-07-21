@@ -24,7 +24,7 @@ class HouseViewModel(private val houseRepository: HouseRepository) : ViewModel()
 
     var userLocation: Location? = null
         set(value) {
-            if (DEBUG ) {
+            if (DEBUG) {
                 Log.d(TAG, "setUserLocation() location: $value")
             }
             field = value
@@ -55,7 +55,7 @@ class HouseViewModel(private val houseRepository: HouseRepository) : ViewModel()
                 allHouses.value = response.body()
             } else {
                 networkStatus.value = NetworkState.FAILED
-                error.value = response.errorBody()?.string()?:"Undetermined error"
+                error.value = response.errorBody()?.string() ?: "Undetermined error"
             }
         }
     }

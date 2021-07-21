@@ -21,13 +21,13 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_height="match_parent"
             app:cardCornerRadius="11dp">
 
             <ImageView
                 android:id="@+id/ivHouse"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/image_of_house"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"

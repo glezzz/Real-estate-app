@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    tools:context=".ui.fragments.OverviewFragment">
+    tools:context=".ui.fragments.HousesOverviewFragment">
 
     <TextView
         android:id="@+id/tvDttRealEstate"
@@ -47,6 +47,7 @@
             android:id="@+id/tietSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/gothamssm_medium"
             android:hint="@string/search_for_a_home"
             android:lines="1"
             android:textColor="@color/strong"

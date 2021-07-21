@@ -11,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,17 +19,16 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.project.dtttest.R
 import com.project.dtttest.adapters.HouseAdapter
-import com.project.dtttest.databinding.FragmentOverviewBinding
-import com.project.dtttest.model.HouseResponse
+import com.project.dtttest.databinding.FragmentHousesOverviewBinding
 import com.project.dtttest.ui.activities.MainActivity
-import com.project.dtttest.ui.viewmodels.MainViewModel
+import com.project.dtttest.ui.viewmodels.HouseViewModel
 import com.project.dtttest.utils.Constants.Companion.LOCATION_REQUEST_CODE
 
-class OverviewFragment : BaseFragment() {
+class HousesOverviewFragment : BaseFragment() {
 
-    lateinit var viewModel: MainViewModel
+    lateinit var viewModel: HouseViewModel
     lateinit var houseAdapter: HouseAdapter
-    private var _binding: FragmentOverviewBinding? = null
+    private var _binding: FragmentHousesOverviewBinding? = null
     val binding get() = _binding!!
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -40,7 +37,7 @@ class OverviewFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentOverviewBinding.inflate(inflater, container, false)
+        _binding = FragmentHousesOverviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -152,23 +149,7 @@ class OverviewFragment : BaseFragment() {
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
                     viewModel.userLocation = location
-                    //
-                    // //We have a location
-                    // // Log.d(TAG, "onSuccess: $location")
-                    // //
-                    // // Log.d(TAG, "onSuccess: " + location.latitude)
-                    // userCoordinates.add(location.latitude)
-                    //
-                    // // Log.d(TAG, "onSuccess: " + location.longitude)
-                    // userCoordinates.add(location.longitude)
-                    //
-                    // // Log.d(TAG, "onSuccess: " + userCoordinates)
-                    // houseAdapter.notifyDataSetChanged()
-
-                } /*else {
-                    Log.d(TAG, "onSuccess: Location was null...")
-
-                }*/
+                }
             }
         return
     }
@@ -202,7 +183,10 @@ class OverviewFragment : BaseFragment() {
                 )
             } else {
                 if (DEBUG) {
-                    Log.d(TAG, "askLocationPermission() DO NOT shouldShowRequestPermissionRationale")
+                    Log.d(
+                        TAG,
+                        "askLocationPermission() DO NOT shouldShowRequestPermissionRationale"
+                    )
                 }
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
@@ -219,7 +203,10 @@ class OverviewFragment : BaseFragment() {
     ) {
 
         if (DEBUG) {
-            Log.d(TAG, "onRequestPermissionsResult() requestCode: $requestCode, results: $permissions, grantResults: $grantResults")
+            Log.d(
+                TAG,
+                "onRequestPermissionsResult() requestCode: $requestCode, results: $permissions, grantResults: $grantResults"
+            )
         }
 
         if (requestCode == LOCATION_REQUEST_CODE) {

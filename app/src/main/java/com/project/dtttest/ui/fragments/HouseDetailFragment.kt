@@ -12,10 +12,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,27 +24,22 @@ import com.project.dtttest.R
 import com.project.dtttest.databinding.FragmentHouseDetailBinding
 import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.ui.activities.MainActivity
-import com.project.dtttest.ui.viewmodels.MainViewModel
+import com.project.dtttest.ui.viewmodels.HouseViewModel
 import com.project.dtttest.utils.Constants.Companion.LOCATION_REQUEST_CODE
-import com.project.dtttest.utils.calculateDistance
 import com.project.dtttest.utils.formatDistance
 import com.project.dtttest.utils.formatPrice
 import com.project.dtttest.utils.loadHouseImage
 
 
-class HouseDetailFragment : Fragment(), OnMapReadyCallback {
+class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.HideNavigationBar {
 
     private var _binding: FragmentHouseDetailBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: HouseViewModel
 
     private val args: HouseDetailFragmentArgs by navArgs()
 
     private lateinit var map: GoogleMap
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    private lateinit var userCoordinates: DoubleArray
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,14 +47,6 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         _binding = FragmentHouseDetailBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.getDoubleArray("userCoordinates")?.let { userCoord ->
-            userCoordinates = userCoord
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,19 +79,13 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         binding.tvSizeDetail.text = house.size.toString()
 
         // Calculate distance between user location and house
-        if (userCoordinates.isNotEmpty()) {
-            binding.tvDistanceDetail.text = formatDistance(
-                calculateDistance(
-                    userCoordinates[userCoordinates.lastIndex - 1],
-                    userCoordinates[userCoordinates.lastIndex],
-                    house.latitude.toDouble(),
-                    house.longitude.toDouble()
-                )
-            )
+        if (house.distance != null) {
+            binding.tvDistanceDetail.text = formatDistance(house.distance!!)
+            binding.tvDistanceDetail.textSize = 12.0F // SP FIX ME set default text size
 
         } else {
             binding.tvDistanceDetail.text = getString(R.string.no_permissions)
-            binding.tvDistanceDetail.textSize = 10.0F
+            binding.tvDistanceDetail.textSize = 10.0F // SP
         }
     }
 
@@ -124,12 +103,10 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         createMarker()
         enableUserLocation()
         map.setOnMapClickListener {
-            Log.d("OnMapClick", "Invoked: ")
 
             val house = args.house
             onMapClickRedirectToGoogleMaps(house.latitude.toDouble(), house.longitude.toDouble())
         }
-        //getLocation()
     }
 
     /**
@@ -146,6 +123,11 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
         )
     }
 
+    /**
+     * Clicking on the map component redirects to Google Maps directions, creating a route from user location
+     * to house location
+     * @param
+     */
     private fun onMapClickRedirectToGoogleMaps(houseLatitude: Double, houseLongitude: Double) {
         val intent = Intent(
             Intent.ACTION_VIEW,
@@ -233,12 +215,4 @@ class HouseDetailFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
-
-    // override fun onMapClick(p0: LatLng) {
-    //     Log.d("OnMapClick", "Invoked: ")
-    //     val uri: String =
-    //         java.lang.String.format(Locale.ENGLISH, "geo:%f,%f", p0.latitude, p0.longitude)
-    //     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-    //     requireContext().startActivity(intent)
-    // }
 }
