@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,7 +27,7 @@ import com.project.dtttest.ui.activities.MainActivity
 import com.project.dtttest.ui.viewmodels.MainViewModel
 import com.project.dtttest.utils.Constants.Companion.LOCATION_REQUEST_CODE
 
-class OverviewFragment : Fragment() {
+class OverviewFragment : BaseFragment() {
 
     lateinit var viewModel: MainViewModel
     lateinit var houseAdapter: HouseAdapter
@@ -48,14 +49,21 @@ class OverviewFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
-        viewModel.allHouses.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.allHouses.observe(viewLifecycleOwner, Observer { list ->
+            Log.d("OverviewFragment", "viewModel.allHouses.observe() list: $list")
+            houseAdapter.setData(list)
+        })
+        viewModel.networkStatus.observe(viewLifecycleOwner, Observer { status ->
 
-            if (response.isSuccessful) {
-                response.body()?.let { houseAdapter.setData(it as ArrayList<HouseResponse>) }
-            } else {
-                Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
+        })
+        viewModel.error.observe(viewLifecycleOwner, Observer { error ->
+            if (error != null) {
+                Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+                viewModel.error.value = null
             }
         })
+
+
         viewModel.getHouses()
 
         // Send house data in bundle to HouseDetailFragment to display the clicked house
@@ -63,8 +71,8 @@ class OverviewFragment : Fragment() {
             val bundle = Bundle().apply {
                 putSerializable("house", it)
 
-                // Bundle with user location to display in detail fragment
-                putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
+                // // Bundle with user location to display in detail fragment
+                // putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
             }
             findNavController().navigate(
                 R.id.action_overviewFragment_to_houseDetailFragment,
@@ -77,6 +85,14 @@ class OverviewFragment : Fragment() {
             run {
 
                 houseAdapter.filter.filter(text)
+            }
+        }
+
+        binding.tietSearch.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                binding.tiSearch.startIconDrawable = null
+            } else {
+                binding.tiSearch.setStartIconDrawable(R.drawable.ic_search)
             }
         }
 
@@ -117,7 +133,6 @@ class OverviewFragment : Fragment() {
      * Request last known location of user's device,
      * which is usually equivalent to the current location of device.
      */
-    var userCoordinates = ArrayList<Double>()
     private fun getLastLocation() {
 
         if (ActivityCompat.checkSelfPermission(
@@ -132,19 +147,23 @@ class OverviewFragment : Fragment() {
         }
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
+                Log.d("OverviewFragment", "getLastLocation() location: $location")
+
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
-                    //We have a location
-                    // Log.d(TAG, "onSuccess: $location")
+                    viewModel.userLocation = location
                     //
-                    // Log.d(TAG, "onSuccess: " + location.latitude)
-                    userCoordinates.add(location.latitude)
-
-                    // Log.d(TAG, "onSuccess: " + location.longitude)
-                    userCoordinates.add(location.longitude)
-
-                    // Log.d(TAG, "onSuccess: " + userCoordinates)
-                    houseAdapter.notifyDataSetChanged()
+                    // //We have a location
+                    // // Log.d(TAG, "onSuccess: $location")
+                    // //
+                    // // Log.d(TAG, "onSuccess: " + location.latitude)
+                    // userCoordinates.add(location.latitude)
+                    //
+                    // // Log.d(TAG, "onSuccess: " + location.longitude)
+                    // userCoordinates.add(location.longitude)
+                    //
+                    // // Log.d(TAG, "onSuccess: " + userCoordinates)
+                    // houseAdapter.notifyDataSetChanged()
 
                 } /*else {
                     Log.d(TAG, "onSuccess: Location was null...")
@@ -155,25 +174,38 @@ class OverviewFragment : Fragment() {
     }
 
     private fun askLocationPermission() {
+        if (DEBUG) {
+            Log.d(TAG, "askLocationPermission()")
+        }
+
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            if (DEBUG) {
+                Log.d(TAG, "askLocationPermission() ACCESS_FINE_GRAINED not granted")
+            }
+
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     requireActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
+                if (DEBUG) {
+                    Log.d(TAG, "askLocationPermission() shouldShowRequestPermissionRationale")
+                }
+
+                requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     LOCATION_REQUEST_CODE
                 )
             } else {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                if (DEBUG) {
+                    Log.d(TAG, "askLocationPermission() DO NOT shouldShowRequestPermissionRationale")
+                }
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                     LOCATION_REQUEST_CODE
                 )
             }
@@ -185,6 +217,11 @@ class OverviewFragment : Fragment() {
         permissions: Array<String?>,
         grantResults: IntArray
     ) {
+
+        if (DEBUG) {
+            Log.d(TAG, "onRequestPermissionsResult() requestCode: $requestCode, results: $permissions, grantResults: $grantResults")
+        }
+
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
@@ -198,5 +235,10 @@ class OverviewFragment : Fragment() {
                 //Permission not granted
             }
         }
+    }
+
+    companion object {
+        private val TAG = "OverviewFragment"
+        private const val DEBUG = true
     }
 }

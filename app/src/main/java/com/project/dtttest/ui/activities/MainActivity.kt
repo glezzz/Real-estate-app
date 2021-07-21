@@ -11,20 +11,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.project.dtttest.R
 import com.project.dtttest.databinding.ActivityMainBinding
-import com.project.dtttest.repository.Repository
-import com.project.dtttest.ui.viewmodelfactory.MainViewModelFactory
-import com.project.dtttest.ui.viewmodels.MainViewModel
+import com.project.dtttest.repository.HouseRepository
+import com.project.dtttest.ui.viewmodels.HouseViewModelFactory
+import com.project.dtttest.ui.viewmodels.HouseViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: MainViewModel
+    lateinit var viewModel: HouseViewModel
     private lateinit var navController: NavController
-
-    val TAG = "Coordinates"
+    private lateinit var binding:ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager
@@ -33,27 +32,25 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavView.setupWithNavController(navHostFragment.findNavController())
 
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        val repository = HouseRepository()
+        val viewModelFactory = HouseViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HouseViewModel::class.java)
 
-        hideBottomNavView(binding)
         hideStatusBar()
     }
 
     /**
      * Hide Bottom Navigation View in houseDetailFragment
+     * See BaseFragment
      */
-    private fun hideBottomNavView(binding: ActivityMainBinding) {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.houseDetailFragment -> binding.bottomNavView.visibility = View.GONE
-                R.id.overviewFragment -> binding.bottomNavView.visibility = View.VISIBLE
-                R.id.informationFragment -> binding.bottomNavView.visibility = View.VISIBLE
-            }
-        }
+    fun hideBottomNavView(hide: Boolean) {
+        binding.bottomNavView.visibility = if (hide) View.GONE else View.VISIBLE
     }
 
+    /**
+     * Hide Status Bar
+     * Depending on the device's Android version use one method or the other
+     */
     private fun hideStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
