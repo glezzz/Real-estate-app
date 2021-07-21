@@ -13,7 +13,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
 import java.lang.Exception
 
-class Repository {
+class HouseRepository {
 
     suspend fun getHouses(): Response<List<HouseResponse>> {
         try {

@@ -9,7 +9,7 @@ import com.project.dtttest.model.HouseResponse
 import com.project.dtttest.repository.HouseRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val houseRepository: HouseRepository) : ViewModel() {
+class HouseViewModel(private val houseRepository: HouseRepository) : ViewModel() {
 
     enum class NetworkState {
         LOADING,
