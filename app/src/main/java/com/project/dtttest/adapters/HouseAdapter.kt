@@ -56,11 +56,13 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
 
             if (house.distance != null) {
                 tvDistance.text = formatDistance(house.distance!!)
-                tvDistance.textSize = 10.0F // SP
+                tvDistance.textSize = 10.0F
 
             } else {
+
+                // Without permissions bind view with text & decrease textSize to better fit the screen
                 tvDistance.text = holder.itemView.context.getString(R.string.no_permissions)
-                tvDistance.textSize = 8.0F // SP
+                tvDistance.textSize = 8.0F
             }
 
             // Card click listener
@@ -73,8 +75,14 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
     class HouseViewHolder(val binding: ItemHouseBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * Binds views with corresponding field
+         * @param house each house that we receive from the overviewFragment
+         */
         fun bind(house: HouseResponse) {
             binding.tvPrice.text = formatPrice(house.price)
+
+            // Don't filter for whitespace
             binding.tvZipcode.text = house.zip.filter { !it.isWhitespace() }
             binding.tvCity.text = house.city
             binding.tvBedrooms.text = house.bedrooms.toString()
@@ -89,6 +97,7 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
     /**
      * Sets data for adapter sorted in ascending order by price & initializes visibleHousesList for
      * use in search functionality
+     * @param newList   the list of houses that we receive from the viewModel observer in housesOverviewFragment
      */
     fun setData(newList: List<HouseResponse>) {
         housesList = ArrayList<HouseResponse>(newList).sortedBy { it.price }
@@ -97,6 +106,7 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
         notifyDataSetChanged()
     }
 
+    //TODO check Lackner's video
     /**
      * Sets the click listener for the detailed view to display
      */
@@ -105,7 +115,7 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
     }
 
     /**
-     * Search through the list of houses via zipcode or city.
+     * Search through the list of houses via zipcode or city
      */
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -116,7 +126,6 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
                 }
 
                 val filteredList: List<HouseResponse>
-
                 if (constraint.isBlank()) {
                     filteredList = housesList
 
@@ -141,12 +150,17 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
                         visibleHousesList =
                             (results.values ?: emptyList<HouseResponse>()) as List<HouseResponse>
                         notifyDataSetChanged()
-                        this@HouseAdapter.overviewFragment.binding.rlNoData.visibility = View.GONE
+
+                        // When constraint matches results, show recyclerview with data
+                        this@HouseAdapter.overviewFragment.binding.llNoData.visibility = View.GONE
                         this@HouseAdapter.overviewFragment.binding.rvHouses.visibility =
                             View.VISIBLE
 
                     } else {
-                        this@HouseAdapter.overviewFragment.binding.rlNoData.visibility =
+
+                        // When no results are found, hide RecyclerView with data & show LinearLayout
+                        // with no results image and textViews
+                        this@HouseAdapter.overviewFragment.binding.llNoData.visibility =
                             View.VISIBLE
                         this@HouseAdapter.overviewFragment.binding.rvHouses.visibility = View.GONE
                     }

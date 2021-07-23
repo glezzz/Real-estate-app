@@ -41,6 +41,8 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
 
     private lateinit var map: GoogleMap
 
+    private val TAG = "HouseDetailFragment"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,11 +83,11 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
         // Calculate distance between user location and house
         if (house.distance != null) {
             binding.tvDistanceDetail.text = formatDistance(house.distance!!)
-            binding.tvDistanceDetail.textSize = 12.0F // SP FIX ME set default text size
+            binding.tvDistanceDetail.textSize = 12.0F
 
         } else {
             binding.tvDistanceDetail.text = getString(R.string.no_permissions)
-            binding.tvDistanceDetail.textSize = 10.0F // SP
+            binding.tvDistanceDetail.textSize = 10.0F
         }
     }
 
@@ -98,6 +100,10 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
         mapFragment?.getMapAsync(this)
     }
 
+    /**
+     * Called when the map is ready to be used. Invokes createMarker() & enableUserLocation() methods
+     * and sets a clickListener that invokes onMapClickRedirectToGoogleMaps()
+     */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         createMarker()
@@ -167,6 +173,7 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
     }
 
     private fun requestLocationPermission() {
+        Log.d(TAG, "requestLocationPermission()")
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -174,8 +181,8 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
         ) {
             Toast.makeText(
                 requireContext(),
-                "Go to settings and accept permissions",
-                Toast.LENGTH_SHORT
+                "Go back and accept permissions",
+                Toast.LENGTH_LONG
             ).show()
         } else {
             ActivityCompat.requestPermissions(

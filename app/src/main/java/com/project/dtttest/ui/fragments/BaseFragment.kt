@@ -3,7 +3,6 @@ package com.project.dtttest.ui.fragments
 import androidx.fragment.app.Fragment
 import com.project.dtttest.ui.activities.MainActivity
 
-
 open class BaseFragment : Fragment() {
     /**
      * Marker interface for fragments.
@@ -13,7 +12,6 @@ open class BaseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         (requireActivity() as MainActivity).hideBottomNavView(this is HideNavigationBar)
     }
 

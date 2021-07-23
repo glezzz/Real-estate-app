@@ -67,9 +67,6 @@ class HousesOverviewFragment : BaseFragment() {
         houseAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("house", it)
-
-                // // Bundle with user location to display in detail fragment
-                // putDoubleArray("userCoordinates", userCoordinates.toDoubleArray())
             }
             findNavController().navigate(
                 R.id.action_overviewFragment_to_houseDetailFragment,
@@ -85,7 +82,8 @@ class HousesOverviewFragment : BaseFragment() {
             }
         }
 
-        binding.tietSearch.setOnFocusChangeListener { v, hasFocus ->
+        // Hide ic_search to the left in search bar when typing
+        binding.tietSearch.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 binding.tiSearch.startIconDrawable = null
             } else {
@@ -111,7 +109,8 @@ class HousesOverviewFragment : BaseFragment() {
     }
 
     /**
-     * Request location permissions on start
+     * onStart if permissions have been granted before get last location,
+     * if not, ask permissions again
      */
     override fun onStart() {
         super.onStart()

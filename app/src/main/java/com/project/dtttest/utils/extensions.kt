@@ -6,12 +6,17 @@ import com.bumptech.glide.load.model.LazyHeaders
 import java.text.DecimalFormat
 
 /**
- * Format price number
+ * Formats the price number of the house to the desired pattern.
+ *
+ * @param housePrice the price of the house to be formatted
+ * @return           the price of the house formatted
+ * @see              DecimalFormat
  */
 const val pricePattern = "\$###,###.###"
 fun formatPrice(housePrice: Int): String? {
     return DecimalFormat(pricePattern).format(housePrice)
 }
+
 /**
  * Format distance
  */
@@ -25,14 +30,14 @@ fun formatDistance(distance: Float): String {
  * Calculates distance between user location and house coordinates
  */
 fun calculateDistance(
-    latOwnLocation: Double,
-    lonOwnLocation: Double,
+    latUserLocation: Double,
+    lonUserLocation: Double,
     latHouseLocation: Double,
     lonHouseLocation: Double
 ): Float {
     val distance = FloatArray(2)
     Location.distanceBetween(
-        latOwnLocation, lonOwnLocation,
+        latUserLocation, lonUserLocation,
         latHouseLocation, lonHouseLocation, distance
     )
     return distance[0]

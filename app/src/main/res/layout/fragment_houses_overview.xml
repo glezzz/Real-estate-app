@@ -65,7 +65,7 @@
         tools:listitem="@layout/item_house" />
 
     <LinearLayout
-        android:id="@+id/rlNoData"
+        android:id="@+id/llNoData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
