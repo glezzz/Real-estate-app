@@ -55,7 +55,11 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
         holder.binding.apply {
 
             if (house.distance != null) {
+
+                // If distance is not null, bind view in correct format
                 tvDistance.text = formatDistance(house.distance!!)
+
+                // Keep default textSize
                 tvDistance.textSize = 10.0F
 
             } else {

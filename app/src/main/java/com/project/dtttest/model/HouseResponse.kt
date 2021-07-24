@@ -19,7 +19,7 @@ data class HouseResponse(
     val createdDate: String
 ) : Serializable {
 
-    //Don't serialize field
+    //Don't serialize this field
     @Transient
     var userLocation: Location? = null
     val distance: Float?

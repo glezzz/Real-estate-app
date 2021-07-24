@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
@@ -82,16 +81,20 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
         // Calculate distance between user location and house
         if (house.distance != null) {
             binding.tvDistanceDetail.text = formatDistance(house.distance!!)
+
+            // Keep default textSize
             binding.tvDistanceDetail.textSize = 12.0F
 
         } else {
+
+            // If permissions are not granted print string to screen & adjust textSize
             binding.tvDistanceDetail.text = getString(R.string.no_permissions)
             binding.tvDistanceDetail.textSize = 10.0F
         }
     }
 
     /**
-     * Initialize Google Maps fragment for house location
+     * Initializes Google Maps fragment for house location
      */
     private fun initGoogleMap() {
         val mapFragment = childFragmentManager
@@ -101,7 +104,7 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
 
     /**
      * Called when the map is ready to be used. Invokes createMarker() & enableUserLocation() methods
-     * and sets a clickListener that invokes onMapClickRedirectToGoogleMaps()
+     * and sets up a clickListener that invokes onMapClickRedirectToGoogleMaps()
      */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
@@ -142,7 +145,7 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
     }
 
     /**
-     * Permission to get current location
+     * Checks if location permission has been granted
      */
     private fun isLocationPermissionGranted() = ContextCompat.checkSelfPermission(
         requireContext(),

@@ -19,6 +19,9 @@ fun formatPrice(housePrice: Int): String? {
 
 /**
  * Format distance
+ *
+ * @param distance the distance between user's device location & house location
+ * @return         the distance formatted to the wished pattern
  */
 const val distancePattern = "###.# km"
 fun formatDistance(distance: Float): String {
@@ -28,6 +31,12 @@ fun formatDistance(distance: Float): String {
 
 /**
  * Calculates distance between user location and house coordinates
+ *
+ * @param latUserLocation the latitude of the user's device location
+ * @param lonUserLocation the longitude of the user's device location
+ * @param latHouseLocation the latitude of the house location
+ * @param lonHouseLocation the longitude of the house location
+ * @return                 the distance between user's device location & house location
  */
 fun calculateDistance(
     latUserLocation: Double,
@@ -45,6 +54,8 @@ fun calculateDistance(
 
 /**
  * Prepares image to load with Glide
+ * @param houseImage the URL of the house image
+ * @return
  */
 fun loadHouseImage(houseImage: String): GlideUrl {
     val url: String =
@@ -52,6 +63,8 @@ fun loadHouseImage(houseImage: String): GlideUrl {
     return GlideUrl(
         url,
         LazyHeaders.Builder()
+
+            // Pass Access-Key
             .addHeader("Access-Key", Constants.ACCESS_KEY)
             .build()
     )
