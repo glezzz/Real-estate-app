@@ -62,6 +62,6 @@ class HouseViewModel(private val houseRepository: HouseRepository) : ViewModel()
 
     companion object {
         private val TAG = "MainViewModel"
-        private const val DEBUG = true
+        private const val DEBUG = false
     }
 }

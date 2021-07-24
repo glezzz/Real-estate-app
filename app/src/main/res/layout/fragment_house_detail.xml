@@ -58,6 +58,7 @@
                         android:id="@+id/tvPriceDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/item_icon_layout_margin_end"
                         android:fontFamily="@font/gothamssm_bold"
                         android:textColor="@color/strong"
                         android:textSize="@dimen/title_02_03"
@@ -73,7 +74,7 @@
                             android:id="@+id/ivBedroomsDetail"
                             android:layout_width="17dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="4dp"
+                            android:layout_marginEnd="@dimen/item_icon_layout_margin_end"
                             app:srcCompat="@drawable/ic_bed"
                             app:tint="@color/medium" />
 
@@ -85,14 +86,14 @@
                             android:fontFamily="@font/gothamssm_medium"
                             android:gravity="center_vertical"
                             android:textColor="@color/medium"
-                            android:textSize="@dimen/body_input_hint_detail"
+                            android:textSize="@dimen/subtitle"
                             tools:text="1" />
 
                         <ImageView
                             android:id="@+id/ivBathroomsDetail"
                             android:layout_width="17dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="4dp"
+                            android:layout_marginEnd="@dimen/item_icon_layout_margin_end"
                             app:srcCompat="@drawable/ic_bath"
                             app:tint="@color/medium" />
 
@@ -104,14 +105,14 @@
                             android:fontFamily="@font/gothamssm_medium"
                             android:gravity="center_vertical"
                             android:textColor="@color/medium"
-                            android:textSize="@dimen/body_input_hint_detail"
+                            android:textSize="@dimen/subtitle"
                             tools:text="1" />
 
                         <ImageView
                             android:id="@+id/ivSizeDetail"
                             android:layout_width="17dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="4dp"
+                            android:layout_marginEnd="@dimen/item_icon_layout_margin_end"
                             app:srcCompat="@drawable/ic_layers"
                             app:tint="@color/medium" />
 
@@ -123,14 +124,15 @@
                             android:fontFamily="@font/gothamssm_medium"
                             android:gravity="center_vertical"
                             android:textColor="@color/medium"
-                            android:textSize="@dimen/body_input_hint_detail"
+                            android:textSize="@dimen/subtitle"
                             tools:text="46" />
 
                         <ImageView
                             android:id="@+id/ivDistanceDetail"
                             android:layout_width="17dp"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/gothamssm_medium"
+                            android:layout_marginEnd="@dimen/item_icon_layout_margin_end"
+                            android:textSize="@dimen/subtitle"
                             app:srcCompat="@drawable/ic_location"
                             app:tint="@color/medium" />
 
@@ -139,10 +141,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/gothamssm_medium"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
                             android:textColor="@color/medium"
-                            android:textSize="@dimen/body_input_hint_detail"
-                            tools:text="54.2 km" />
+                            android:textSize="@dimen/subtitle"
+                            tools:text="No Permissions" />
 
                     </LinearLayout>
 

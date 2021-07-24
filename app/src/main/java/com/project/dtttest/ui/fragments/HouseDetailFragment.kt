@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -167,31 +166,37 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
                 return
             }
             map.isMyLocationEnabled = true
-        } else {
-            requestLocationPermission()
-        }
+        } /*else {
+                // requestLocationPermission()
+                Toast.makeText(
+                    requireContext(),
+                    "Accept permissions to see distance",
+                    Toast.LENGTH_LONG
+
+                ).show()
+        }*/
     }
 
-    private fun requestLocationPermission() {
-        Log.d(TAG, "requestLocationPermission()")
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
-            Toast.makeText(
-                requireContext(),
-                "Go back and accept permissions",
-                Toast.LENGTH_LONG
-            ).show()
-        } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_REQUEST_CODE
-            )
-        }
-    }
+    // private fun requestLocationPermission() {
+    //     Log.d(TAG, "requestLocationPermission()")
+    //     if (ActivityCompat.shouldShowRequestPermissionRationale(
+    //             requireActivity(),
+    //             Manifest.permission.ACCESS_FINE_LOCATION
+    //         )
+    //     ) {
+    //         Toast.makeText(
+    //             requireContext(),
+    //             "Go back and accept permissions",
+    //             Toast.LENGTH_LONG
+    //         ).show()
+    //     } else {
+    //         ActivityCompat.requestPermissions(
+    //             requireActivity(),
+    //             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+    //             LOCATION_REQUEST_CODE
+    //         )
+    //     }
+    // }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -211,7 +216,7 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
                     return
                 }
                 map.isMyLocationEnabled = true
-            } else {
+            } /*else {
                 Toast.makeText(
                     requireContext(),
                     "To activate user location go to settings and allow location permissions",
@@ -219,7 +224,7 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
                 ).show()
             }
             else -> {
-            }
+            }*/
         }
     }
 }

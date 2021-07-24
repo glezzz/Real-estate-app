@@ -50,16 +50,15 @@ class HousesOverviewFragment : BaseFragment() {
             Log.d("OverviewFragment", "viewModel.allHouses.observe() list: $list")
             houseAdapter.setData(list)
         })
-        viewModel.networkStatus.observe(viewLifecycleOwner, Observer { status ->
-
-        })
+        // viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
+        //
+        // })
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
             if (error != null) {
                 Toast.makeText(context, error, Toast.LENGTH_LONG).show()
                 viewModel.error.value = null
             }
         })
-
 
         viewModel.getHouses()
 
@@ -77,7 +76,6 @@ class HousesOverviewFragment : BaseFragment() {
         // Listen to text changes in search bar & perform filtering
         binding.tietSearch.doOnTextChanged { text, _, _, _ ->
             run {
-
                 houseAdapter.filter.filter(text)
             }
         }
@@ -93,6 +91,9 @@ class HousesOverviewFragment : BaseFragment() {
 
     }
 
+    /**
+     * Prepare
+     */
     private fun setupRecyclerView() {
         houseAdapter = HouseAdapter(this)
         binding.rvHouses.apply {
@@ -119,18 +120,24 @@ class HousesOverviewFragment : BaseFragment() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
+
+            // If permissions are granted, get last known location
             getLastLocation()
+
         } else {
+
+            // Else, request permissions them each time onStart() gets called in HousesOverviewFragment
             askLocationPermission()
         }
     }
 
     /**
-     * Request last known location of user's device,
+     * Get last known location of user's device,
      * which is usually equivalent to the current location of device.
      */
     private fun getLastLocation() {
-
+        Log.d(TAG, "private fun getLastLocation(): getLastLocation()")
+        // If permissions are granted
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -141,11 +148,13 @@ class HousesOverviewFragment : BaseFragment() {
         ) {
             return
         }
+
+        // Get last location
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 Log.d("OverviewFragment", "getLastLocation() location: $location")
 
-                // Got last known location. In some rare situations this can be null.
+                // Initialize userLocation with lastLocation
                 if (location != null) {
                     viewModel.userLocation = location
                 }
@@ -153,6 +162,9 @@ class HousesOverviewFragment : BaseFragment() {
         return
     }
 
+    /**
+     *
+     */
     private fun askLocationPermission() {
         if (DEBUG) {
             Log.d(TAG, "askLocationPermission()")
@@ -195,6 +207,12 @@ class HousesOverviewFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Callback for the result from requesting permissions.
+     * @param requestCode the request code passed in requestPermissions()
+     * @param permissions String: The requested permissions. Never null
+     * @param grantResults The grant results for the corresponding permissions which is either PackageManager.PERMISSION_GRANTED or PackageManager.PERMISSION_DENIED. Never null.
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String?>,
@@ -212,14 +230,14 @@ class HousesOverviewFragment : BaseFragment() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 // Permission granted
-                // Log.d(TAG, "permission granted")
+                Log.d(TAG, "onRequestPermissionsResult(): getLastLocation()")
                 getLastLocation()
                 // Log.d(TAG, "get last location done")
 
 
-            } else {
+            } /*else {
                 //Permission not granted
-            }
+            }*/
         }
     }
 
