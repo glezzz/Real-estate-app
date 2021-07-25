@@ -156,7 +156,7 @@ class HousesOverviewFragment : BaseFragment() {
     }
 
     /**
-     *
+     * Request location permissions
      */
     private fun askLocationPermission() {
         if (ContextCompat.checkSelfPermission(
