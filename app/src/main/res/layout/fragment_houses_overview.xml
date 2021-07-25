@@ -78,6 +78,7 @@
             android:layout_gravity="center"
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="-30dp"
             android:src="@drawable/search_state_empty" />
 
         <TextView
