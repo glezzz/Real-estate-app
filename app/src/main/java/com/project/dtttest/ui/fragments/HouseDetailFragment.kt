@@ -134,7 +134,9 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
     /**
      * Clicking on the map component redirects to Google Maps directions, creating a route from user location
      * to house location
-     * @param
+     *
+     * @param houseLatitude the latitude of the house
+     * @param houseLongitude the longitude of the house
      */
     private fun onMapClickRedirectToGoogleMaps(houseLatitude: Double, houseLongitude: Double) {
         val intent = Intent(
@@ -169,37 +171,8 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
                 return
             }
             map.isMyLocationEnabled = true
-        } /*else {
-                // requestLocationPermission()
-                Toast.makeText(
-                    requireContext(),
-                    "Accept permissions to see distance",
-                    Toast.LENGTH_LONG
-
-                ).show()
-        }*/
+        }
     }
-
-    // private fun requestLocationPermission() {
-    //     Log.d(TAG, "requestLocationPermission()")
-    //     if (ActivityCompat.shouldShowRequestPermissionRationale(
-    //             requireActivity(),
-    //             Manifest.permission.ACCESS_FINE_LOCATION
-    //         )
-    //     ) {
-    //         Toast.makeText(
-    //             requireContext(),
-    //             "Go back and accept permissions",
-    //             Toast.LENGTH_LONG
-    //         ).show()
-    //     } else {
-    //         ActivityCompat.requestPermissions(
-    //             requireActivity(),
-    //             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-    //             LOCATION_REQUEST_CODE
-    //         )
-    //     }
-    // }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -219,15 +192,7 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
                     return
                 }
                 map.isMyLocationEnabled = true
-            } /*else {
-                Toast.makeText(
-                    requireContext(),
-                    "To activate user location go to settings and allow location permissions",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
-            else -> {
-            }*/
         }
     }
 }

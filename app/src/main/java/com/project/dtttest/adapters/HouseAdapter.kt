@@ -44,6 +44,12 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
         return visibleHousesList.size
     }
 
+    /**
+     * Gets each individual item from the visibleHousesList
+     *
+     * @param position the position in the recyclerview
+     * @return         the house on that position
+     */
     private fun getItem(position: Int): HouseResponse {
         return visibleHousesList[position]
     }
@@ -81,6 +87,7 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
 
         /**
          * Binds views with corresponding field
+         *
          * @param house each house that we receive from the overviewFragment
          */
         fun bind(house: HouseResponse) {
@@ -99,8 +106,8 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
     }
 
     /**
-     * Sets data for adapter sorted in ascending order by price & initializes visibleHousesList for
-     * use in search functionality
+     * Sets data for adapter sorted in ascending order by price & initializes visibleHousesList for use in search functionality
+     *
      * @param newList   the list of houses that we receive from the viewModel observer in housesOverviewFragment
      */
     fun setData(newList: List<HouseResponse>) {
@@ -112,7 +119,8 @@ class HouseAdapter(private val overviewFragment: HousesOverviewFragment) :
 
     //TODO check Lackner's video
     /**
-     * Sets the click listener for the detailed view to display
+     * Sets up the onClickListener for the detailed view to display the house that's been clicked
+     * @param listener  a listener that takes a HouseResponse as a parameter and returns nothing
      */
     fun setOnItemClickListener(listener: (HouseResponse) -> Unit) {
         onItemClickListener = listener

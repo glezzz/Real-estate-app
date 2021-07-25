@@ -30,7 +30,6 @@ data class HouseResponse(
                     latitude.toDouble(), longitude.toDouble()
                 )
             }
-
             return null
         }
 }

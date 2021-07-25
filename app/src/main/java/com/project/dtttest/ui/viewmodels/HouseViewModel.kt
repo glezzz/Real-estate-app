@@ -1,7 +1,6 @@
 package com.project.dtttest.ui.viewmodels
 
 import android.location.Location
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,16 +16,14 @@ class HouseViewModel(private val houseRepository: HouseRepository) : ViewModel()
         FAILED
     }
 
-    val networkStatus: MutableLiveData<NetworkState> = MutableLiveData(NetworkState.LOADING)
+    private val networkStatus: MutableLiveData<NetworkState> = MutableLiveData(NetworkState.LOADING)
     val error: MutableLiveData<String?> = MutableLiveData()
 
     val allHouses: MutableLiveData<List<HouseResponse>> = MutableLiveData()
 
     var userLocation: Location? = null
         set(value) {
-            if (DEBUG) {
-                Log.d(TAG, "setUserLocation() location: $value")
-            }
+
             field = value
             allHouses.value?.let { list ->
                 list.forEach { house ->
@@ -58,10 +55,5 @@ class HouseViewModel(private val houseRepository: HouseRepository) : ViewModel()
                 error.value = response.errorBody()?.string() ?: "Undetermined error"
             }
         }
-    }
-
-    companion object {
-        private val TAG = "MainViewModel"
-        private const val DEBUG = false
     }
 }

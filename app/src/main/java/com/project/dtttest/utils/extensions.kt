@@ -54,6 +54,7 @@ fun calculateDistance(
 
 /**
  * Prepares image to load with Glide
+ *
  * @param houseImage the URL of the house image
  * @return
  */

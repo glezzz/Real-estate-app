@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,12 +46,10 @@ class HousesOverviewFragment : BaseFragment() {
         setupRecyclerView()
 
         viewModel.allHouses.observe(viewLifecycleOwner, Observer { list ->
-            Log.d("OverviewFragment", "viewModel.allHouses.observe() list: $list")
+
             houseAdapter.setData(list)
         })
-        // viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
-        //
-        // })
+
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
             if (error != null) {
                 Toast.makeText(context, error, Toast.LENGTH_LONG).show()
@@ -92,7 +89,7 @@ class HousesOverviewFragment : BaseFragment() {
     }
 
     /**
-     * Prepare
+     * Initializes houseAdapter and sets up the adapter of recyclerview to houseAdapter
      */
     private fun setupRecyclerView() {
         houseAdapter = HouseAdapter(this)
@@ -110,8 +107,7 @@ class HousesOverviewFragment : BaseFragment() {
     }
 
     /**
-     * onStart if permissions have been granted before get last location,
-     * if not, ask permissions again
+     * onStart, if permissions have been granted before, get last location, if not, ask permissions again
      */
     override fun onStart() {
         super.onStart()
@@ -136,8 +132,6 @@ class HousesOverviewFragment : BaseFragment() {
      * which is usually equivalent to the current location of device.
      */
     private fun getLastLocation() {
-        Log.d(TAG, "private fun getLastLocation(): getLastLocation()")
-        // If permissions are granted
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -149,10 +143,9 @@ class HousesOverviewFragment : BaseFragment() {
             return
         }
 
-        // Get last location
+        // If permission are granted, get last location
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
-                Log.d("OverviewFragment", "getLastLocation() location: $location")
 
                 // Initialize userLocation with lastLocation
                 if (location != null) {
@@ -166,39 +159,24 @@ class HousesOverviewFragment : BaseFragment() {
      *
      */
     private fun askLocationPermission() {
-        if (DEBUG) {
-            Log.d(TAG, "askLocationPermission()")
-        }
-
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            if (DEBUG) {
-                Log.d(TAG, "askLocationPermission() ACCESS_FINE_GRAINED not granted")
-            }
-
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     requireActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                if (DEBUG) {
-                    Log.d(TAG, "askLocationPermission() shouldShowRequestPermissionRationale")
-                }
 
+                // I realize this is method deprecated. See my motivation letter
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     LOCATION_REQUEST_CODE
                 )
             } else {
-                if (DEBUG) {
-                    Log.d(
-                        TAG,
-                        "askLocationPermission() DO NOT shouldShowRequestPermissionRationale"
-                    )
-                }
+
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                     LOCATION_REQUEST_CODE
@@ -209,6 +187,7 @@ class HousesOverviewFragment : BaseFragment() {
 
     /**
      * Callback for the result from requesting permissions.
+     *
      * @param requestCode the request code passed in requestPermissions()
      * @param permissions String: The requested permissions. Never null
      * @param grantResults The grant results for the corresponding permissions which is either PackageManager.PERMISSION_GRANTED or PackageManager.PERMISSION_DENIED. Never null.
@@ -218,31 +197,12 @@ class HousesOverviewFragment : BaseFragment() {
         permissions: Array<String?>,
         grantResults: IntArray
     ) {
-
-        if (DEBUG) {
-            Log.d(
-                TAG,
-                "onRequestPermissionsResult() requestCode: $requestCode, results: $permissions, grantResults: $grantResults"
-            )
-        }
-
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 // Permission granted
-                Log.d(TAG, "onRequestPermissionsResult(): getLastLocation()")
                 getLastLocation()
-                // Log.d(TAG, "get last location done")
-
-
-            } /*else {
-                //Permission not granted
-            }*/
+            }
         }
-    }
-
-    companion object {
-        private val TAG = "OverviewFragment"
-        private const val DEBUG = true
     }
 }

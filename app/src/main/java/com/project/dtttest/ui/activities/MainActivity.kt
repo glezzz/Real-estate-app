@@ -1,31 +1,19 @@
 package com.project.dtttest.ui.activities
 
-import android.Manifest
-import android.content.ContentValues.TAG
-import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.project.dtttest.R
 import com.project.dtttest.databinding.ActivityMainBinding
 import com.project.dtttest.repository.HouseRepository
-import com.project.dtttest.ui.fragments.HousesOverviewFragment
-import com.project.dtttest.ui.viewmodels.HouseViewModelFactory
 import com.project.dtttest.ui.viewmodels.HouseViewModel
-import com.project.dtttest.utils.Constants.Companion.LOCATION_REQUEST_CODE
+import com.project.dtttest.ui.viewmodels.HouseViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
