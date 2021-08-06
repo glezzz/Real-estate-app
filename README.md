@@ -14,7 +14,19 @@ This view displays an overview of the houses with a search bar on top.
 
 ![](assets/overview.png)
 
+You can use the search bar to filter for houses by address or zip code. If no result matches, this screen is displayed.
+
+![](assets/Noresult.png)
+
 When you click on a item, you move to detailed view with a bigger picture, a description and a marker with its location in the map.
 
 ![](assets/detail.png)
+
+If you click on the map inside the detailed view you'll get redirected to Google Maps to get directions
+
+![](assets/directions.png)
+
+The other bottom navigation button is just a static view with some fictional info about the development team
+
+![](assets/info.png)
 

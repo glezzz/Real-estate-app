@@ -81,7 +81,7 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
             binding.tvDistanceDetail.text = formatDistance(house.distance!!)
 
             // Keep default textSize
-            binding.tvDistanceDetail.textSize = 12.0F
+            binding.tvDistanceDetail.textSize = 10.0F
 
         } else {
 
