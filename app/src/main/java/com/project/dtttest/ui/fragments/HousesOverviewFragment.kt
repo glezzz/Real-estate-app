@@ -170,7 +170,6 @@ class HousesOverviewFragment : BaseFragment() {
                 )
             ) {
 
-                // I realize this is method deprecated. See my motivation letter
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     LOCATION_REQUEST_CODE

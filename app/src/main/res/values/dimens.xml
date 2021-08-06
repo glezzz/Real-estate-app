@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="title_01">18dp</dimen>
-    <dimen name="title_02_03">16dp</dimen>
-    <dimen name="body_input_hint_detail">12dp</dimen>
-    <dimen name="subtitle">10dp</dimen>
+    <dimen name="title_01">18sp</dimen>
+    <dimen name="title_02_03">16sp</dimen>
+    <dimen name="body_input_hint_detail">12sp</dimen>
+    <dimen name="subtitle">10sp</dimen>
     <dimen name="item_icon_width">14sp</dimen>
     <dimen name="item_icon_height">14sp</dimen>
     <dimen name="item_icon_layout_margin_end">4dp</dimen>

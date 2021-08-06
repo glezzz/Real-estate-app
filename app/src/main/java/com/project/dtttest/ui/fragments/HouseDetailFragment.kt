@@ -39,8 +39,6 @@ class HouseDetailFragment : BaseFragment(), OnMapReadyCallback, BaseFragment.Hid
 
     private lateinit var map: GoogleMap
 
-    private val TAG = "HouseDetailFragment"
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
