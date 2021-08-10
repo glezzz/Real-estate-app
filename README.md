@@ -1,6 +1,7 @@
 ### Real Estate app
 
 App that displays houses for sale. It displays an image, their price, address, amount of bedrooms and bathrooms, size and distance based on the user's current location.
+Tech stack: MVVM, Retrofit, Glide and Google Maps API. 
 
 When the app gets started a splash screen is displayed
 
